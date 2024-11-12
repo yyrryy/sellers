@@ -435,7 +435,7 @@ def generateavoirsupp(request):
     supplier.rest=float(supplier.rest)-float(total)
     supplier.save()
     avoir=Avoirsupp.objects.create(
-        supplier_id=supplierid, date=date, total=total, items=json.dumps(items)
+        supplier_id=supplierid, date=date, total=total
         )
     with transaction.atomic():
         for i in items:
@@ -448,6 +448,7 @@ def generateavoirsupp(request):
                 avoirsupp=avoir,
                 product=product,
                 quantity=float(i['qty']),
+                #price=float(i['price']),
                 isavoirsupp=True,
             )
 
@@ -492,11 +493,11 @@ def relveclient(request):
     end_date_str = request.GET.get('end')
     customer = request.GET.get('customer')
     start_date = datetime.strptime(start_date_str[:10], '%d/%m/%Y')
-    end_date = datetime.strptime(end_date_str[:10], '%d/%m/%Y') + timedelta(days=1)
+    end_date = datetime.strptime(end_date_str[:10], '%d/%m/%Y')
     print(start_date, end_date)
     bons = SalesHistory.objects.filter(customer_id=customer, datebon__range=[start_date, end_date]).order_by('datebon')
-    avoirs = Avoir.objects.filter(customer_id=customer, created_at__range=[start_date, end_date])
-    payments=PaymentClient.objects.filter(client_id=customer, created_at__range=[start_date, end_date])
+    avoirs = Avoir.objects.filter(customer_id=customer, dateavoir__range=[start_date, end_date])
+    payments=PaymentClient.objects.filter(client_id=customer, date__range=[start_date, end_date])
     sales_and_returns = chain(bons, avoirs, payments)
     customer=Customer.objects.get(pk=customer)
     totalbons=bons.aggregate(Sum('grand_total')).get('grand_total__sum') or 0
@@ -1554,6 +1555,7 @@ def updateproduct(request, id):
         # name = request.POST.get('name')
         car = request.POST.get('updatecar')
         minstock = request.POST.get('updateminstock')
+        price = request.POST.get('updateprice')
         #price = request.POST.get('updateprice')
         #prachat = request.POST.get('updatepr_achat')
         #remise=request.POST.get('updateremise')
@@ -1574,6 +1576,7 @@ def updateproduct(request, id):
             #print('rrr',prnet)
             #product.name=name
             product.ref=ref
+            product.prvente=price
             # product.price=price
             product.car=car
             product.minstock=minstock

@@ -76,9 +76,9 @@
         {% endfor %} -->
         <!-- {{item.pr_achat}} -->
     </td>
-    <td class="product_price" hidden>
+    <td class="product_price">
         <b>
-            {{item.price}}
+            {{item.prvente}}
         </b>
     </td>
     {% if not home %}
@@ -89,26 +89,7 @@
         </button>
         <a  href="{% url 'product:producthistory' id=item.id %}"><button class="btn btn-danger btn-xs fa fa-history" title="Historique"></button></a>
 
-        <button type="button" class="btn btn-info duplicatebtn fa fa-copy"  data-id="{{item.id}}" title="dupliquer">
-
-        </button>
-        <div class="mt-2 d-none duplicatediv">
-            <input type="text" class="mb-2 form-control refduplicate" placeholder="reference de produit a fisionner">
-            <!-- <select class="form-select markduplicate">
-                <option value="0">
-                    ---Marque---
-                </option>
-                {% for i in marks %}
-                <option value="{{i.id}}">
-                    {{i.name}}
-                </option>
-                {% endfor %}
-            </select> -->
-            <button class="createduplicate btn btn-success w-100" id="{{item.id}}" categoryid="{{item.category.id}}">+</button>
-            <div class="checkboxes">
-
-            </div>
-        </div>
+        
     </td>
     {% endif %}
 

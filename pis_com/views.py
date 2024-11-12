@@ -37,7 +37,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 class LoginView(FormView):
-    print('login view here', not Category.objects.exists())
     template_name = 'login.html'
     form_class = auth_forms.AuthenticationForm
     
@@ -169,6 +168,9 @@ class HomePageView(ListView):
         )
 
         context.update({
+            'totalproducts':Product.objects.all().count(),
+            'totalclients':Customer.objects.all().count(),
+            'totalsoldclients':Customer.objects.aggregate(total=Sum('rest'))['total'] or 0,
             'sales_count': sales.count(),
             'sales_sum': (
                 int(sales_sum.get('total_sales')) if
@@ -179,7 +181,7 @@ class HomePageView(ListView):
                 int(today_sales_sum.get('total_sales')) if
                 today_sales_sum.get('total_sales') else 0
             ),
-            'cc':Category.objects.filter(children__isnull=True),
+            #'cc':Category.objects.filter(children__isnull=True),
             'title':'Dashboard'
         })
 

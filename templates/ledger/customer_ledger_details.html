@@ -70,18 +70,7 @@
                     <th>Rest</th>
                     <th>{{ customer.rest|floatformat:2 }} DH</th>
                 </tr>
-                <tr>
-                    <th>Fournisseur</th>
-                    <th>
-                      {% if customer.supplier %}
-                      {{customer.supplier}}
-                      {% else %}
-                      <select class="supplierslist w-100" onchange="setsupplier(event)">
-
-                      </select>
-                      {%endif%}
-                    </th>
-                </tr>
+                
             </table>
             <div class="mt-3" id="reportrange" style="cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
                 <i class="fa fa-calendar"></i>&nbsp;

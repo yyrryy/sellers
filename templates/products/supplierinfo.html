@@ -61,14 +61,7 @@
                   <th>Rest</th>
                   <th>{{ supplier.rest|floatformat:2 }} DH</th>
                 </tr>
-                <tr>
-                  <th>Client</th>
-                  <th>{% if supplier.client %}{{ supplier.client.customer_name }}{% else %}
-                    <select class="clientsearch w-100" onchange="setclient(event)">
-
-                    </select>
-                    {%endif%}</th>
-                </tr>
+                
 
             </table>
             <div class="mt-3">

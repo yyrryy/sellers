@@ -146,6 +146,7 @@ class Product(models.Model):
     )
     price=models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     pr_achat=models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    prvente=models.FloatField(default=0.00, null=True)
     pondire=models.FloatField(default=0.00, null=True)
     remise=models.IntegerField(default=0)
     prnet=models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
@@ -281,9 +282,7 @@ class StockIn(models.Model):
     product = models.ForeignKey(
         Product, related_name='stockin_product',on_delete=models.CASCADE, default=None
     )
-    quantity = models.CharField(
-        max_length=100, blank=True, null=True
-    )
+    quantity = models.FloatField(default=0)
     price=models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     total=models.FloatField(default=0.00)
     remise=models.FloatField(default=0.00)
