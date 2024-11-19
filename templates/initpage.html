@@ -40,7 +40,7 @@
             </form>
 
             <strong>Ajouter Des produit via excel</strong>
-        <form action="{% url 'product:addbulkcategory' %}" class="addbulk col-6" method="post" enctype="multipart/form-data">
+        <form action="{% url 'product:addbulk' %}" class="addbulk col-6" method="post" enctype="multipart/form-data">
             <input type="file" class="form-control mb-2" required name="excel_file">
     
             <select name="category" class="form-select mb-2" required>
@@ -57,20 +57,14 @@
             </button>
         </form>
     
-        <strong>Ajouter Des Clients via excel</strong>
-        <form action="{% url 'product:addbulkcategory' %}" class="addbulk col-6" method="post" enctype="multipart/form-data">
+        <strong>Ajouter Des Fournisseurs via excel</strong>
+        <form action="{% url 'product:addbulksuppliers' %}" class="addbulk col-6" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             <input type="file" class="form-control mb-2" required name="excel_file">
     
-            <select name="category" class="form-select mb-2" required>
-                <option value="">---</option>
-                {% for i in categories %}
-                    <option value="{{i.id}}">
-                        {{i.name}}
-                    </option>
-                {% endfor %}
-            </select>
+            
     
-            <button class="btn btn-primary addbulkcategorybtn">
+            <button class="btn btn-primary">
                 Ajouter
             </button>
         </form>

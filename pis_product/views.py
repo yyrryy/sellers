@@ -1233,29 +1233,50 @@ def getproducts(request):
 @csrf_exempt
 def addbulk(request):
     # get the uploaded file
-
+    category=request.POST.get('category')
     myfile=request.FILES[next(iter(request.FILES))]
     retailer=Retailer.objects.get(id=request.user.retailer_user.retailer.id)
 
     df = pd.read_excel(myfile)
-    df = df.fillna('-')
+    df = df.fillna('0')
     for d in df.itertuples():
+        prachatnet=round(float(d.prixachat)-(float(d.prixachat)*float(d.remise)/100), 2)
         product = Product.objects.create(
-            retailer=retailer,
-            name=d.article,
-            brand_name=d.marque,
-            price=d.prix,
-            pr_achat=d.prachat
+            retailer_id=1,
+            ref=d.ref,
+            car=d.designation,
+            stock=d.stock,
+            remise=d.remise,
+            minstock=d.minstock,
+            pr_achat=d.prixachat,
+            price=d.prixventemag,
+            prvente=d.prixventegro,
+            originsupp_id=d.fournisseur,
+            prnet=prachatnet,
+            category_id=category,
         )
         StockIn.objects.create(
             product=product,
-            quantity=d.qty,
+            quantity=d.stock,
         )
     #return a json response
     return redirect('index')
 
 
-
+def addbulksuppliers(request):
+    myfile=request.FILES[next(iter(request.FILES))]
+    df = pd.read_excel(myfile)
+    for d in df.itertuples():
+        Supplier.objects.create(
+            name=d.nom,
+            phone1=d.phone,
+            rest=d.sold,
+            total=d.sold
+        )
+    return redirect('product:supplierslist')
+        
+    #return a json response
+    return redirect('index')
 def updatestock(request):
     qty=float(request.POST.get('sortieqty'))
     id=request.POST.get('id')

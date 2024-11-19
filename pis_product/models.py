@@ -144,8 +144,9 @@ class Product(models.Model):
         'pis_retailer.Retailer',
         related_name='retailer_product',on_delete=models.CASCADE, default=None
     )
-    price=models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     pr_achat=models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    price=models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    #prix vente gro
     prvente=models.FloatField(default=0.00, null=True)
     pondire=models.FloatField(default=0.00, null=True)
     remise=models.IntegerField(default=0)
