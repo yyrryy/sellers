@@ -1710,7 +1710,7 @@ def producthistory(request, id):
     totalouts=(stockout.aggregate(Sum('quantity')).get('quantity__sum') or 0)+(outavoirsupp.aggregate(Sum('quantity')).get('quantity__sum') or 0)
     allouts = sorted(chain(stockout, outavoirsupp), key=attrgetter('created_at'), reverse=True)
     # avoir also is out of stock
-    totalin=pr.aggregate(Sum('quantity')).get('quantity__sum')
+    totalin=pr.aggregate(Sum('quantity')).get('quantity__sum') or 0
     totalcost=round(float(totalin)*float(product.pr_achat), 2)
     prices=json.loads(product.prices)
     # print('>>>>>>>>>>', prices)
@@ -2374,22 +2374,25 @@ def supplierinfo(request, id):
         if not userprofile.canseesupplier:
             return render(request, 'products/nopermission.html')
     supplier=Supplier.objects.get(pk=id)
-    payments=PaymentSupplier.objects.filter(supplier=supplier).order_by('-date')
+    payments=PaymentSupplier.objects.filter(supplier=supplier).order_by('-date')[:30]
     nbrpayments=payments.count()
     totalpayments=payments.aggregate(total=Sum('amount'))['total'] or 0
-    bons=Itemsbysupplier.objects.filter(supplier=supplier).order_by('-bondate')
-    avoirs=Avoirsupp.objects.filter(supplier=supplier)
+    bons=Itemsbysupplier.objects.filter(supplier=supplier).order_by('-bondate')[:30]
+    avoirs=Avoirsupp.objects.filter(supplier=supplier)[:30]
     navoirs=avoirs.count()
     totalavoirs=avoirs.aggregate(total=Sum('total'))['total'] or 0
     nbrbons=bons.count()
     paymentscount=payments.count()
-    productsofsupplier=Product.objects.filter(originsupp_id=id)
+    supplierCurrentValue = Product.objects.filter(
+        originsupp=supplier, stock__gt=0
+    ).aggregate(total_value=Sum(F('prnet') * F('stock')))['total_value'] or 0
+    # productsofsupplier=Product.objects.filter(originsupp=supplier, stock__gt=0)
     
-    #finish this, ch7al dyal sl3a kaina dyal had lfournisseur
-    print('productsofsupplier', productsofsupplier, supplier.name)
-    supplierCurrentValue=0
-    for i in productsofsupplier:
-        supplierCurrentValue+=float(i.prnet)*float(i.stock)
+    # #finish this, ch7al dyal sl3a kaina dyal had lfournisseur
+    # print('productsofsupplier', productsofsupplier, supplier.name)
+    # supplierCurrentValue=0
+    # for i in productsofsupplier:
+    #     supplierCurrentValue+=float(i.prnet)*float(i.stock)
     
     return render (request, 'products/supplierinfo.html', {
         'title':supplier.name.upper()+' Situation',
