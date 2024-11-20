@@ -1244,6 +1244,7 @@ def addbulk(request):
         product = Product.objects.create(
             retailer_id=1,
             ref=d.ref,
+            mark_id=d.mark,
             car=d.designation,
             stock=d.stock,
             remise=d.remise,
@@ -2382,6 +2383,14 @@ def supplierinfo(request, id):
     totalavoirs=avoirs.aggregate(total=Sum('total'))['total'] or 0
     nbrbons=bons.count()
     paymentscount=payments.count()
+    productsofsupplier=Product.objects.filter(originsupp_id=id)
+    
+    #finish this, ch7al dyal sl3a kaina dyal had lfournisseur
+    print('productsofsupplier', productsofsupplier, supplier.name)
+    supplierCurrentValue=0
+    for i in productsofsupplier:
+        supplierCurrentValue+=float(i.prnet)*float(i.stock)
+    
     return render (request, 'products/supplierinfo.html', {
         'title':supplier.name.upper()+' Situation',
         'bons':bons,
@@ -2394,7 +2403,8 @@ def supplierinfo(request, id):
         'paymentscount':paymentscount,
         'avoirs':avoirs,
         'navoirs':navoirs,
-        'totalavoirs':totalavoirs
+        'totalavoirs':totalavoirs,
+        'currentvalue':supplierCurrentValue
 
     })
 
