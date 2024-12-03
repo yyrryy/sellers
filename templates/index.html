@@ -54,14 +54,14 @@
 
     <div class="row mt-3">
         <div class="col-3">
-            <div class="rounded shadow p-3">
+            <div class="rounded shadow p-3 bg-white">
                 <div class="row align-items-center">
-                    <div class="col-8 border-end">
+                    <div class="">
                         <strong>
                             {{totalproducts}}
                         </strong>
                     </div>
-                    <div class="col-4">
+                    <div class="">
                         Produits
                     </div>
                 </div>
@@ -70,14 +70,14 @@
         </div>
 
         <div class="col-3">
-            <div class="rounded shadow p-3">
+            <div class="rounded shadow p-3 bg-white">
                 <div class="row align-items-center">
-                    <div class="col-8 border-end">
+                    <div class="">
                         <strong>
                             {{today_sales_sum}}DH
                         </strong>
                     </div>
-                    <div class="col-4">
+                    <div class="">
                         Ventes de jour
                     </div>
                 </div>
@@ -86,14 +86,14 @@
         </div>
 
         <div class="col-3">
-            <div class="rounded shadow p-3">
+            <div class="rounded shadow p-3 bg-white">
                 <div class="row align-items-center">
-                    <div class="col-8 border-end">
+                    <div class="">
                         <strong>
                             {{totalclients}}
                         </strong>
                     </div>
-                    <div class="col-4">
+                    <div class="">
                         Clients
                     </div>
                 </div>
@@ -102,7 +102,7 @@
         </div>
 
         <div class="col-3">
-            <div class="rounded shadow p-3">
+            <div class="rounded shadow p-3 bg-white">
                 <div class="row align-items-center">
                     <div class="col-8  border-end">
                         <strong>
@@ -132,7 +132,7 @@
 </div>
 
 <h1 style="text-align: center; font-size: 8em;" class="text-primary">
-    {{ request.user.retailer_user.retailer.name }}
+    {{ request.user.retailer_user.retailer.name.upper }}
 </h1>
 
 {% endblock %}

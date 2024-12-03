@@ -1214,7 +1214,7 @@ def searchglobal(request):
     q_objects = Q()
     for term in search_terms:
         if term:
-            q_objects &= (Q(ref__iregex=term) | Q(car__iregex=term)| Q(category__name__iregex=term))
+            q_objects &= (Q(ref__iregex=term) | Q(car__iregex=term)| Q(category__name__iregex=term)| Q(mark__name__iregex=term))
 
     products = Product.objects.filter(q_objects).order_by('-stock')
 
