@@ -1466,6 +1466,9 @@ def addoneproduct(request):
     stock=request.POST.get('stock') or 0
     minstock=request.POST.get('minstock') or 0
     prachat = request.POST.get('prachat') or 0
+    prventegro = request.POST.get('prventegro')
+    prventemag = request.POST.get('prventemag')
+    print('>> prv', prventemag, prventegro)
     remise = request.POST.get('remise') or 0
     priceslist=[]
     if not supplier == None and not stock == 0:
@@ -1480,13 +1483,14 @@ def addoneproduct(request):
     product=Product.objects.create(
         retailer=request.user.retailer_user.retailer,
         # name=name.strip(),
-        price=0,
         pr_achat=prachat,
         category_id=category,
         stock=stock,
         remise=remise,
         minstock=minstock,
         prnet=prnet,
+        prvente=prventegro,
+        price=prventemag,
         car=car,
         ref=ref,
         originsupp_id=supplier,
@@ -1494,11 +1498,12 @@ def addoneproduct(request):
         image=image,
         prices=json.dumps(priceslist)
     )
-    StockIn.objects.create(
+    st=StockIn.objects.create(
         product=product,
         quantity=stock,
         price=prachat
     )
+    st.supplier_id=supplier
     originref=product.ref.split(' ')[0]
     simillar = Product.objects.filter(category=category).filter(Q(ref__startswith=originref+' ') | Q(ref=originref))
     sim=any([i.stock for i in simillar])
@@ -2281,6 +2286,8 @@ def addsupply(request):
             prnet=round(float(i['price'])-(float(i['price'])*float(remise/100)), 2)
             product.prnet=prnet
             product.remise=remise
+            product.price=i['prventmag']
+            product.prvente=i['prventgro']
             product.prices=json.dumps(prices)
             # if float(product.pr_achat)!=float(i['price']):
             #     print('not equal')

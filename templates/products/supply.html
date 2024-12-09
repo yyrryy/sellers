@@ -251,12 +251,14 @@
             <table class="table table-bordered supplytable">
                 <thead>
                 <tr class="">
-                    <th style="width: 60%;">Article</th>
+                    <th style="width: 30%;">Article</th>
 
-                    <th style="width: 10%;">Quantité</th>
-                    <th style="width: 10%;">Prix unit.</th>
-                    <th style="width: 10%;">Remise</th>
-                    <th style="width: 10%;">Total</th>
+                    <th>Quantité</th>
+                    <th>Prix unit.</th>
+                    <th>Remise</th>
+                    <th>Total</th>
+                    <th>Pr. vente mag.</th>
+                    <th>Pr. vente GRO</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -345,6 +347,8 @@
                         value="${i.remise}"
                         class="form-control remise calculate" placeholder="Rmise" type="number" step=0.01 onkeyup="saverow(event)"> </td>
                     <td><span class="total">${i.total}</span></td>
+                    <td><input class="form-control prventmag" placeholder="Pr. vente. gro" type="number" step=0.01 onkeyup="saverow(event)" value="${i.prventmag}"> </td>
+                    <td><input class="form-control prventgro" placeholder="Pr. vente. gro" type="number" step=0.01 onkeyup="saverow(event)" value="${i.prventgro}"> </td>
                     <input type="hidden" class="productid" value=${i.productid}><td><i class="btn btn-danger delete" title="Supprimer" onclick="removeline(event, '${i.productid}')">X</i></td>
                     </tr>`);
 
@@ -362,6 +366,8 @@
             price=tr.find('.price').val()?tr.find('.price').val():0
             qty=tr.find('.qty').val()?tr.find('.qty').val():0
             remise=tr.find('.remise').val()?tr.find('.remise').val():0
+            prventmag=tr.find('.prventmag').val()?tr.find('.prventmag').val():0
+            prventgro=tr.find('.prventgro').val()?tr.find('.prventgro').val():0
             productid=tr.find('.productid').val()
 
             bonitems=JSON.parse(localStorage.getItem('bonitemsachat')) || []
@@ -378,6 +384,8 @@
                 'remise':remise,
                 'productid':productid,
                 'total':total,
+                'prventmag':prventmag,
+                'prventgro':prventgro,
             }
             if (dx > -1){
                 bonitems[dx]=row
@@ -473,6 +481,8 @@
                     <td><input class="form-control price calculate" placeholder="Price" type="number" step=0.01 onkeyup="saverow(event)"> </td>
                     <td><input class="form-control remise calculate" placeholder="Rmise" type="number" step=0.01 onkeyup="saverow(event)"> </td>
                     <td><span class="total">0.00</span></td>
+                    <td><input class="form-control prventmag" placeholder="Pr. vente. mag" type="number" step=0.01 onkeyup="saverow(event)"> </td>
+                    <td><input class="form-control prventgro" placeholder="Pr. vente. gro" type="number" step=0.01 onkeyup="saverow(event)"> </td>
                     <input type="hidden" class="productid" value=${productid}><td><i class="btn btn-danger delete" title="Supprimer" onclick="removeline(event, '${productid}')">X</i></td>
                     </tr>`);
 
@@ -668,6 +678,8 @@
                         products['item_id'] = $($('.item-row')[i]).find('.productid').val();
                         products['price'] = parseFloat($($('.item-row')[i]).find('.price').val());
                         products['qty'] = $($('.item-row')[i]).find('.qty').val();
+                        products['prventmag'] = $($('.item-row')[i]).find('.prventmag').val();
+                        products['prventgro'] = $($('.item-row')[i]).find('.prventgro').val();
                         products['remise'] = $($('.item-row')[i]).find('.remise').val();
                         products['total'] = parseFloat($($('.item-row')[i]).find('.total').text());
                         items.push(products);

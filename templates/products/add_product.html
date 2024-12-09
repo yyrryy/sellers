@@ -119,6 +119,21 @@
                 </strong>
                 <input required type="number" class="form-control" name="price" min="0" step="0.01">
             </div> -->
+            <div class="row">
+                <div class="col-6">
+                    <strong>
+                        Prix Vente magazin
+                    </strong>
+                    <input type="number" class="form-control prventemaginput" name="prventemag" min="0" step="0.01">
+                </div>
+
+                <div class="col-6">
+                    <strong>
+                        Prix Vente Gro
+                    </strong>
+                    <input type="number" class="form-control prventegroinput" name="prventegro" min="0" step="0.01">
+                </div>
+            </div>
             <div class="mb-3 row">
                 <div class="col-6">
                     <strong>
@@ -166,7 +181,10 @@
 {% endblock %}
 {% block scripts %}
 <script>
-
+    // precvent enter key from sending
+    $(document).on("keypress", ":input:not(textarea)", function(event) {
+        return event.keyCode != 13;
+    }); 
 
     $(document).ready(()=>{
 

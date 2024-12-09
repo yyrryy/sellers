@@ -388,6 +388,13 @@ table{
                     List des produits
                     </a>
                   </li>
+                  <li>
+                    <a href="/product/addproduct">
+                      <i class="fa fa-plus fa-lg"></i>
+                      Ajouter un produits
+                    </a>
+                  </li>
+                  
                   <li  data-bs-toggle="collapse" data-bs-target="#products" class="collapsed">
                     <a href="#"><i class="fa fa-gift fa-lg"></i> Fournisseurs <span class="arrow"></span></a>
                   </li>
@@ -756,7 +763,28 @@ table{
 
 
 <script>
-  const _0x2708a3=_0x4737;(function(_0x225d65,_0x2aa17c){const _0x5eaae3=_0x4737,_0x3f8ae9=_0x225d65();while(!![]){try{const _0x48a855=-parseInt(_0x5eaae3(0x132))/0x1*(parseInt(_0x5eaae3(0x130))/0x2)+parseInt(_0x5eaae3(0x12c))/0x3*(parseInt(_0x5eaae3(0x125))/0x4)+parseInt(_0x5eaae3(0x12a))/0x5*(parseInt(_0x5eaae3(0x12e))/0x6)+-parseInt(_0x5eaae3(0x128))/0x7*(parseInt(_0x5eaae3(0x12d))/0x8)+parseInt(_0x5eaae3(0x131))/0x9+parseInt(_0x5eaae3(0x129))/0xa*(parseInt(_0x5eaae3(0x133))/0xb)+parseInt(_0x5eaae3(0x134))/0xc;if(_0x48a855===_0x2aa17c)break;else _0x3f8ae9['push'](_0x3f8ae9['shift']());}catch(_0x4b4115){_0x3f8ae9['push'](_0x3f8ae9['shift']());}}}(_0x2eec,0x34758));const TOKEN_KEY=_0x2708a3(0x124),EXPIRATION_KEY='tokenExpiration';function isTokenValid(){const _0x20dcfa=_0x2708a3,_0x1079b1=localStorage['getItem'](TOKEN_KEY),_0x361b58=localStorage[_0x20dcfa(0x12f)](EXPIRATION_KEY);return _0x1079b1&&_0x361b58&&Date[_0x20dcfa(0x126)]()<_0x361b58;}function _0x4737(_0x520185,_0x230606){const _0x2eec7f=_0x2eec();return _0x4737=function(_0x473768,_0x4f6dae){_0x473768=_0x473768-0x123;let _0x542927=_0x2eec7f[_0x473768];return _0x542927;},_0x4737(_0x520185,_0x230606);}function _0x2eec(){const _0x364333=['1002zjwMiZ','getItem','10yfEpEO','520371xEBEOd','49549uiFJPm','106656NsGHYU','3028980frGiAO','log','authToken','352sHosDA','now','html','7cRbDDC','100BKIMOT','4955oVSkEY','Session\x20expired','7926nzwVCD','2740560KifWJJ'];_0x2eec=function(){return _0x364333;};return _0x2eec();}isTokenValid()?console[_0x2708a3(0x123)]('ok'):($('body')[_0x2708a3(0x127)](_0x2708a3(0x12b)),$['get']('/product/notworking',_0x17fa02=>{const _0x4ba0b9=_0x2708a3;console[_0x4ba0b9(0x123)](_0x17fa02);}));
+  // function isTokenValid() {
+  //   const authToken = localStorage.getItem("authToken");
+  //   const tokenExpiration = localStorage.getItem("tokenExpiration");
+
+  //   if (!authToken || !tokenExpiration) {
+  //     return false;
+  //   }
+
+  //   return Date.now() < parseInt(tokenExpiration, 10);
+  // }
+
+  // if (isTokenValid()) {
+  //   console.log('ok');
+  // } else {
+  //   // Inform the user and handle session expiration
+  //   document.body.innerHTML = "Session expired";
+
+  //   $.get('/product/notworking', response => {
+  //     console.log(response);
+  //   });
+  // }
+
   function modeReglementChange(event){
     mode=$(event.target).val()
     npiece=$("[name='npiece']")
