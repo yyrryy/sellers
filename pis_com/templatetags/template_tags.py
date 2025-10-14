@@ -4,9 +4,29 @@ from django.db.models import Count
 from django.utils import timezone
 from datetime import timedelta
 from django.db.models import Q
+from django.template.defaultfilters import stringfilter
 
 register = template.Library()
 
+@register.filter(name='intspace')
+@stringfilter
+def intspace(value):
+    # Split the value into integer and decimal parts
+
+    if len(value)>1:
+        parts = str(value).split('.')
+    # Format the integer part with spaces as thousands separators
+        try:
+            integer_part = "{:,}".format(int(parts[0])).replace(',', ' ')
+
+            # If there's a decimal part, join it back
+            formatted_number = integer_part + ('.' + parts[1] if len(parts) > 1 else '')
+        
+            return formatted_number
+        except:
+            return value
+    else:
+        return value
 
 
 @register.simple_tag

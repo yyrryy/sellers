@@ -502,22 +502,22 @@
                 $('#grandTotal').text((tt*1.2).toFixed(2))
             })
         })
-         $('[name=supplier]').on('change', ()=>{
-             if ($('[name=supplier]').val()!=0){
-                 let supplier=$('[name=supplier]').val()
-                 $('.loading').removeClass('d-none').addClass('d-flex');
-                 $.post('{% url "product:getsupplierproducts" %}', {
-                     'csrfmiddlewaretoken': '{{ csrf_token }}',
-                     'supplier': $('[name="supplier"]').val(),
-                 },function (result, status) {
-                     console.log(result.enteredpdcts)
-                      $('.itemsbon').html(result.enteredpdcts)
-                     $('.loading').removeClass('d-flex').addClass('d-none');
-                     calculate()
-                     })
-                    }
+        //  $('[name=supplier]').on('change', ()=>{
+        //      if ($('[name=supplier]').val()!=0){
+        //          let supplier=$('[name=supplier]').val()
+        //          $('.loading').removeClass('d-none').addClass('d-flex');
+        //          $.post('{% url "product:getsupplierproducts" %}', {
+        //              'csrfmiddlewaretoken': '{{ csrf_token }}',
+        //              'supplier': $('[name="supplier"]').val(),
+        //          },function (result, status) {
+        //              console.log(result.enteredpdcts)
+        //               $('.itemsbon').html(result.enteredpdcts)
+        //              $('.loading').removeClass('d-flex').addClass('d-none');
+        //              calculate()
+        //              })
+        //             }
 
-                })
+        //         })
         //             $('.itemsselectholder').html(result.data)
         //             $('.refexeption').on('change', function(){
         //                 let ref=$('.refexeptioninp').val()
@@ -646,10 +646,15 @@
                                 'bondate': $('[name="bondate"]').val(),
                                 'total': parseFloat($('#grandTotal').text()),
                                 'nbon':$('#invoice_number').val(),
+                                'facture':'{{facture}}'
                             }, function (result, status) {
                                 //refresh the page
                                 //location.reload()
-                                window.location.href='/product/bonsentrees/'
+                                {% if user.groups.all.0.name == 'account' %}
+                                window.location.href='/product/bonsentrees?facture={{facture}}'
+                                {% else %}
+                                window.location.href='/product/bonsentrees'
+                                {% endif %}
                             }
                         ).fail(function (xhr, status, errors) {
                             alert('خطأ في البيانات المدخلة، يرجى التأكد من صحة البيانات والمحاولة مرة أخرى');

@@ -108,8 +108,8 @@ class CustomerLedgerView(TemplateView):
     def dispatch(self, request, *args, **kwargs):
         if not self.request.user.is_authenticated:
             return HttpResponseRedirect(reverse('login'))
-        if not request.user.retailer_user.retailer.working:
-            return render(request, 'products/nopermission.html')
+        # if not request.user.retailer_user.retailer.working:
+        #     return render(request, 'products/nopermission.html')
         return super(
             CustomerLedgerView, self).dispatch(request, *args, **kwargs)
 
@@ -225,8 +225,17 @@ class CustomerLedgerDetailsView(TemplateView):
         total_payments = float(total_payments.get('amount__sum') or 0)
         total_avoirs = Avoir.objects.filter(customer=customer).aggregate(Sum('grand_total')).get('grand_total__sum') or 0
         clientpayments=PaymentClient.objects.filter(client=customer)
+        bons = SalesHistory.objects.filter(customer=customer)
+        paid_amount=bons.aggregate(Sum('paid_amount')).get('paid_amount__sum') or 0
+        avoirs = Avoir.objects.filter(customer=customer)
+        payments=PaymentClient.objects.filter(client=customer)
+        totalbons=bons.aggregate(Sum('grand_total')).get('grand_total__sum') or 0
+        totalcredit=(avoirs.aggregate(Sum('grand_total')).get('grand_total__sum') or 0)+(payments.aggregate(Sum('amount')).get('amount__sum') or 0)
+        sold=float(totalbons)-float(totalcredit)
 
+        #sold=round(float(bons)-float(paid_amount)-float(avoirs)-float(payments), 2)   
         context.update({
+            'sold':sold,
             'customer': customer,
             'ledgers': ledgers.order_by('-dated'),
             'ledger_total': '%g' % ledger_total,

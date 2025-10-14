@@ -50,11 +50,14 @@
         <div class="d-flex justify-content-between">
           <div>
             <div
-              >Devis N°: <strong>{{facture.receipt_no}}</strong>
+              >Devis N°: <strong>{{facture.devis_no}}</strong>
             </div>
             <div>
-              Date: <strong>{{facture.datebon|date:"d/m/Y"}}</strong>
+              Date: <strong>{{facture.date|date:"d/m/Y"}}</strong>
             </div>
+          </div>
+          <div>
+            Client: <strong>{{facture.client.customer_name}}</strong>
           </div>
           
         </div>
@@ -87,14 +90,14 @@
                     </td> -->
                   <td style="height: 190mm;white-space: nowrap;padding-left:3px">
                       {% for v in i %}
+                        <!-- {{v.product.category.name.upper}}  -->
                         {{v.product.car.upper|slice:"50"}}
                         {% if not forloop.counter == i|length %}<br>{% endif %}
                       {% endfor %}
                   </td>
                   <td class="text-center">
                     {% for v in i %}
-                    {{v.quantity}}
-                    {% if not forloop.counter == i|length %}<br>{% endif %}
+                    {{v.qty}} {% if not forloop.counter == i|length %}<br>{% endif %}
                     {% endfor %}
                   </td>
                   <td class="text-center">
@@ -111,7 +114,7 @@
                   </td> -->
                   <td class="text-center">
                     {% for v in i %}
-                    {{v.purchase_amount|floatformat:2|intspace}}
+                    {{v.total|floatformat:2|intspace}}
                     {% if not forloop.counter == i|length %}<br>{% endif %}
                     {% endfor %}
                   </td>
@@ -156,21 +159,21 @@
         <div class="d-flex justify-content-between">
           <div>
             <div
-              >Facture N°: <strong>{{facture.receipt_no}}</strong>
+              >Facture N°: <strong>{{facture.devis_no}}</strong>
             </div>
             <div>
-              Date: <strong>{{facture.datebon|date:"d/m/Y"}}</strong>
+              Date: <strong>{{facture.date|date:"d/m/Y"}}</strong>
             </div>
           </div>
           <div>
             <div>
-              cleint: <strong>{{facture.customer.customer_name.upper}}</strong>
+              Client: <strong>{{facture.client.customer_name}}</strong>
             </div>
-            <div class="">
+            <!-- <div class="">
               ICE: <strong>
-                 {{facture.customer.ice}}
+                 {{facture.client.ice}}
               </strong>
-            </div>
+            </div> -->
 
           </div>
         </div>
@@ -203,14 +206,14 @@
               </td> -->
             <td style="height: 190mm;white-space: nowrap;padding-left:3px">
                 {% for v in i %}
+                  <!-- {{v.product.category.name.upper}}  -->
                   {{v.product.car.upper|slice:"50"}}
                   {% if not forloop.counter == i|length %}<br>{% endif %}
                 {% endfor %}
             </td>
             <td class="text-center">
               {% for v in i %}
-              {{v.quantity}}
-              {% if not forloop.counter == i|length %}<br>{% endif %}
+              {{v.qty}} {% if not forloop.counter == i|length %}<br>{% endif %}
               {% endfor %}
             </td>
             <td class="text-center">
@@ -227,7 +230,7 @@
             </td> -->
             <td class="text-center">
               {% for v in i %}
-              {{v.purchase_amount|floatformat:2|intspace}}
+              {{v.total|floatformat:2|intspace}}
               {% if not forloop.counter == i|length %}<br>{% endif %}
               {% endfor %}
             </td>
@@ -301,7 +304,7 @@
     /*$('.ttcgc{{facture.id}}').text(separateThousands('{{facture.total|floatformat:2|intspace}}'))
     $('.tvafc{{facture.id}}').text(separateThousands({{tva|floatformat:2|intspace}}))
     $('.htfc{{facture.id}}').text(separateThousands({{ht|floatformat:2|intspace}}))*/
-     $('.totalfactureprint').text($.spellingNumber('{{facture.grand_total|floatformat:2}}', {
+     $('.totalfactureprint').text($.spellingNumber('{{facture.total|floatformat:2}}', {
       lang:'fr',
       wholesUnit:"Dirhams",
       fractionUnit:"Centimes",

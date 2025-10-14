@@ -20,6 +20,30 @@
     <link href="{% static 'css/alertify.min.css' %}" rel="stylesheet">
     <!--external css-->
     <style>
+      /* .form-group {
+  position: relative;
+  margin-top: 20px;
+}
+
+
+label {
+  position: absolute;
+  left: 10px;
+  top: 12px;
+  background: white;
+  padding: 0 4px;
+  color: #999;
+  font-size: 16px;
+  transition: 0.2s ease all;
+  pointer-events: none;
+}
+input:focus + label,
+input:not(:placeholder-shown) + label {
+  top: -10px;
+  left: 8px;
+  font-size: 12px;
+  color: #333;
+} */
       .passwordscreen{
         z-index: 9999;
       }
@@ -312,6 +336,52 @@ table{
 .w15{
   width: 15%;
 }
+.dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  border: 2px solid;
+  border-radius: 10px;
+  width:37em;
+  z-index: 1;
+  top: 0;
+  left: 2.5em;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {color: #7084f5; border-bottom: 2px solid;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: flex;flex-wrap: wrap;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
     </style>
     {% block css %}{% endblock %}
     <link href="{% static 'font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
@@ -336,7 +406,7 @@ table{
 
     </strong>
 </div>
-<div class="p-2 shadow d-flex justify-content-between" style="
+<div class="p-2 shadow d-flex justify-content-between position-relative" style="
             background: aliceblue;
             color: black;
             font-size: 21px;
@@ -344,11 +414,55 @@ table{
             position: sticky;
             top: 0;
         ">
-          <div onclick="$('.sidebar').toggleClass('w15');$('.sidebar').toggleClass('w2')">
-            <button class="btn btn-dark">
+          <div>
+            <!-- Example single danger button -->
+            <div class="dropdown">
+              <button class="btn btn-dark" onclick="$('.sidebar').toggleClass('w15');$('.sidebar').toggleClass('w2')">
+                ☰
+              </button>
+              
+              
+              <div class="dropdown-content text-center">
+                <a href="/sales/create/invoice/" class="quickitem">
+                  <div class="fa fa-money"></div>
+                  <div>+bon</div>
+                </a>
+                <a href="/sales/invoice/list/" class="quickitem">
+                  <div class="fa fa-list"></div>
+                  <div>List bons</div>
+                </a>
+                <a href="/product/deviview/" class="quickitem">
+                  <div class="fa fa-money"></div>
+                  <div>+Devis</div>
+                </a>
+                <a href="/ledger/list/customer/" class="quickitem">
+                  <div class="fa fa-user"></div>
+                  <div>Client</div>
+                </a>
+                
+                <a href="/product/items/productslistbycategory/" class="quickitem">
+                  <div class="fa fa-list
+                  "></div>
+                  <div>Produits</div>
+                </a>
+
+                <a href="/product/facturation" class="quickitem">
+                  <div class="fa fa-cash
+                  "></div>
+                  <div>Facturation</div>
+                </a>
+                
+                
+              </div>
+            </div>
+            <a class="btn btn-dark fa fa-home" href="/">
+                
+            </a>
+            <!-- <button class="btn btn-dark fa fa-home" ></button> -->
+            <!-- <button class="btn btn-dark" onclick="$('.sidebar').toggleClass('w15');$('.sidebar').toggleClass('w2')">
               ☰
-            </button>
-             {{ request.user.retailer_user.retailer.name }}
+            </button> -->
+             {{ request.user.retailer_user.retailer.name }} {% if  user.groups.all.0.name == 'account' %}-Facturation{% endif %}
           </div>
             <div>
               {{title}}
@@ -369,10 +483,10 @@ table{
             </div>
         </div>
 <section class="d-flex">
-  <div class="sidebar w15" style="transition: width .5s ease; overflow: hidden; white-space: nowrap;">
+  
+  <div class="sidebar w2" style="transition: width .5s ease; overflow: hidden; white-space: nowrap;">
     <div class="nav-side-menu d-flex flex-column" >
-      <!-- <div class="brand" onclick="$('.sidebar').toggleClass('w15');$('.sidebar').toggleClass('w2')">{{ request.user.retailer_user.retailer.name }}</div>
-      <i class="fa fa-bars fa-2x toggle-btn" data-bs-toggle="collapse" data-bs-target="#menu-content"></i> -->
+      
 
           <div class="menu-list">
 
@@ -412,9 +526,7 @@ table{
                       <li><a href="{% url 'product:bonsentrees' %}">
                         List bon achat
                       </a></li>
-                      <!-- <li><a href="{% url 'product:marks' %}">
-                        Les marques
-                      </a></li> -->
+                      
                   </ul>
 
 
@@ -445,7 +557,7 @@ table{
                    <i class="fa fa-user fa-lg"></i> Clients
                    </a>
                    </li>
-                   <!-- facture manual -->
+                   
 
 
 
@@ -465,7 +577,21 @@ table{
                     <i class="fa fa-list fa-lg"></i> Inventaire
                     </a>
                   </li>
-                  
+                  <li>
+                    <a href="/product/reports">
+                    <i class="fa fa-money fa-lg"></i> Rapports
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/product/facturation">
+                    <i class="fa fa-money fa-lg"></i> Facturation
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/product/boncommandes">
+                    <i class="fa fa-money fa-lg"></i>list bon commandes
+                    </a>
+                  </li>
                  
                   
                   
@@ -485,8 +611,7 @@ table{
       </div>
   </div>
 
-
-    <section class="wrapper p-2" style="width:-webkit-fill-available;height: 92vh; overflow-y: scroll; position: relative;">
+    <section class="wrapper p-2" style="width:100%;height: 92vh; overflow-y: scroll; position: relative; overflow-x: hidden;">
 
         
       {% block content %}{% endblock %}
@@ -763,6 +888,65 @@ table{
 
 
 <script>
+  function addpaymentbon(event, bonid){
+    amount=$('.paidamount').val()
+    mode=$('.mode').val()
+    npiece=$('.npiece').val()
+    echeance=$('.echeance').val()
+    if (amount==''||amount==0){
+      alertify.error('Mantant')
+      return
+    }
+    $(event.target).addClass('disabled')
+    $.get('/product/addpaymentbon', {
+      'amount':amount,
+      'mode':mode,
+      'mode':mode, 
+      'npiece':npiece,
+      'echeance':echeance,
+      'bonid':bonid
+    }, (data)=>{
+      if (data.success){
+        location.reload()
+      }
+    })
+  }
+  function contablefacture(factureid){
+    $.get('/product/contablefacture/', {
+      'id': factureid
+    }, (data)=>{
+      if (data.success){
+        alertify.success('Facture comptabilisé')
+        location.reload()
+      }else{
+        alertify.error('Erreur')
+      }
+    })
+  }
+  function addpaymentfacture(event, factureid){
+    amount=$('.paidamount').val()
+    mode=$('.mode').val()
+    npiece=$('.npiece').val()
+    echeance=$('.echeance').val()
+    if (amount==''||amount==0){
+      alertify.error('Mantant')
+      return
+    }
+    $(event.target).addClass('disabled')
+    $.get('/product/addpaymentfacture', {
+      'amount':amount,
+      'mode':mode,
+      'mode':mode, 
+      'npiece':npiece,
+      'echeance':echeance,
+      'factureid':factureid
+    }, (data)=>{
+      if (data.success){
+        location.reload()
+      }
+    })
+  }
+  
   // function isTokenValid() {
   //   const authToken = localStorage.getItem("authToken");
   //   const tokenExpiration = localStorage.getItem("tokenExpiration");
@@ -800,7 +984,7 @@ table{
   function printfacture(bonid){
 
 url = window.location.pathname.split( '/' );[0]
-var myWindow = window.open('http://'+window.location.href.split( '/' )[2]+'/product/factureprint/'+bonid, '', 'width=900,height=900');
+var myWindow = window.open('http://'+window.location.href.split( '/' )[2]+'/product/factureprint?id='+bonid, '', 'width=900,height=900');
 
  myWindow.focus();
 
@@ -846,28 +1030,52 @@ setTimeout(function() {
 
   function printbon(bonid){
 
-       url = window.location.pathname.split( '/' );[0]
-       var myWindow = window.open('http://'+window.location.href.split( '/' )[2]+'/product/bonprint/'+bonid, '', 'width=900,height=900');
+url = window.location.pathname.split( '/' );[0]
+var myWindow = window.open('http://'+window.location.href.split( '/' )[2]+'/product/bonprint/'+bonid, '', 'width=900,height=900');
 
-        myWindow.focus();
+ myWindow.focus();
 
-        myWindow.addEventListener('load', function() {
-      console.log('New window loaded.');
+ myWindow.addEventListener('load', function() {
+console.log('New window loaded.');
 
-      // Wait for 5 seconds before printing
-      setTimeout(function() {
-        try {
-          myWindow.print();
-          console.log('Print command issued.');
-          myWindow.close();
-          console.log('New window closed.');
-        } catch (e) {
-          console.error('Failed to print and close the window:', e);
-        }
-      }, 300); // 1000 milliseconds = 1 seconds
+// Wait for 5 seconds before printing
+setTimeout(function() {
+ try {
+   myWindow.print();
+   console.log('Print command issued.');
+   myWindow.close();
+   console.log('New window closed.');
+ } catch (e) {
+   console.error('Failed to print and close the window:', e);
+ }
+}, 300); // 1000 milliseconds = 1 seconds
+}, false);
+}
+  function avoirprint(bonid){
+
+    url = window.location.pathname.split( '/' );[0]
+    var myWindow = window.open('http://'+window.location.href.split( '/' )[2]+'/product/avoirprint/'+bonid, '', 'width=900,height=900');
+
+    myWindow.focus();
+
+    myWindow.addEventListener('load', function() {
+    console.log('New window loaded.');
+
+    // Wait for 5 seconds before printing
+    setTimeout(function() {
+    try {
+      myWindow.print();
+      console.log('Print command issued.');
+      myWindow.close();
+      console.log('New window closed.');
+    } catch (e) {
+      console.error('Failed to print and close the window:', e);
+    }
+    }, 300); // 1000 milliseconds = 1 seconds
     }, false);
-  }
-  let inactivityTime=0;
+}
+
+let inactivityTime=0;
 
   function checkForInactivity(t) {
     var inactivityInterval = setInterval(function() {
@@ -880,7 +1088,7 @@ setTimeout(function() {
         $('.passwordscreen').removeClass('d-none')
         $('.passwordinput').focus()
         $('.passwordinput').on('keyup', function(){
-          if ($(this).val()=='adashi'){
+          if ($(this).val()=='oussama'){
             $('.passwordinput').val('')
             $('.passwordscreen').addClass('d-none')
             inactivityTime=0
@@ -906,11 +1114,11 @@ setTimeout(function() {
       }, (data)=>{
         console.log(data)
               if (data.exist){
-                  $('.checkerror').removeClass('d-fle').addClass('d-flex')
+                  $('.checkerror').removeClass('d-none')
                   $('.addoneproductbtn').attr('disabled', true)
               }
               else{
-                  $('.checkerror').removeClass('d-flex').addClass('d-none')
+                  $('.checkerror').addClass('d-none')
                   $('.addoneproductbtn').attr('disabled', false)
               }
           })
@@ -963,10 +1171,11 @@ setTimeout(function() {
           success: function(data) {
             if (data.success){
               alertify.success('OK')
-              $('.addoneproductform')[0].reset()
-              $('[name="category"]').select2().val('').trigger('change')
-              $('[name="mark"]').select2().val('').trigger('change')
-              $('.addoneproductbtn').attr('disabled', true)
+              if ($('[name="dest"]').val()=='receive'){
+                $('.addoneproductform')[0].reset();
+                return
+              }
+              location.reload()
             }else{
               alertify.success('ERROR')
             }

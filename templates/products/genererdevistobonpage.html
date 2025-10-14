@@ -57,20 +57,20 @@
 
 
 <!-- bon articles -->
-<div class="container">
 
-    <div class="shadow rounded p-2 bg-white px-md-5">
-        <h5>
-            Bon Sortie #{{nbon}}
-        </h5>
-        <div class="alert alert-danger text-center item-error" style="display: none;" role="alert">
-        </div>
-        <div>
-            Prix client: <strong class="clientprice"></strong>
-        </div>
-        <div class="d-flex justify-content-between">
-            <div class="col-md-3 mt-3 d-flex flex-column">
-                <select class="form-selsect select2 customer " name="customer" id="customer">
+    <div class="border rounded row">
+        <div class="col-2">
+            <h5>
+                Bon Sortie #{{nbon}}
+            </h5>
+            <div class="alert alert-danger text-center item-error" style="display: none;" role="alert">
+            </div>
+            <div>
+                Prix client: <strong class="clientprice"></strong>
+                Sold client: <strong class="soldclient"></strong>
+            </div>
+            <div class="mt-3 d-flex flex-column">
+                <select class="form-selsect select2 customer clientselectbl " name="customer" id="customer">
                     <option value="0">
                         Client
                     </option>
@@ -78,8 +78,11 @@
                         <option value="{{ customer.id }}">{{ customer.customer_name }} - {{ customer.customer_phone }}</option>
                     {% endfor %}
                 </select>
-
-                <button type="button" class="mt-2 btn btn-success addoneproduct" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <!--  this used to use modal -->
+                <!-- <button type="button" class="mt-2 btn btn-success addoneproduct" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    + Client
+                </button> -->
+                <button type="button" class="mt-2 btn btn-success" onclick="$('.addclientholder').removeClass('d-none')">
                     + Client
                 </button>
                 <div class="mt-2">
@@ -88,71 +91,92 @@
                     <input type="time" name="timebon" placeholder="Date" value="{{present_date|date:'Y-m-d'}}" class="form-control timebon">
                 </div>
             </div>
-
-            <div class="d-none col-md-6 mb-3 productslistholder position-relative">
-                <button class="btn btn-success" onclick="$('.addproductholder').removeClass('d-none')">
-                    +
-                </button>
-                <strong>
-                    Produits
-                </strong> <br>
-                <select name="" id="" class="productslist form-control" style="width: 100%;"></select>
-                <!-- <div class="mt-3 row">
-                    <div class="col-3">
-                        Qty
-                        <input type="number" class="addqty">
-                        <div class="addstock"></div>
-                    </div>
-                    <div class="col-3">
-                        Prix
-                        <input type="number" class="addprice">
-                    </div>
-                    <div class="col-3">
-                        Remise
-                        <input type="number" class="addremise">
-                    </div>
-                    <div class="col-3">
-
-                        <button class="btn btn-primary w-100">+</button>
-                    </div>
-                    <input type="text" class="addname" hidden>
-                </div> -->
-                <!-- <div class="itemsselectholder"></div>
-                <input type="text" class="form-control refexeption refexeptioninp" placeholder="REF exeption">
-                <select class="select2 categoryid w-100 refexeption refexeptioncategory">
-                    {% for i in categories %}
-                    <option value="{{i.id}}">
-                        {{i.name}}
-                    </option>
-                    {% endfor %}
-                </select>
-                <div class="exeptionresults d-flex flex-column">
-
-                </div> -->
-
-            </div>
+            
         </div>
-        <hr>
-        <div id="item-data-sc" class="table-responsive item-data-sc">
-            <table class="table table-bordered">
-                <thead>
-                <tr class="">
-                    <th style="width: 45%;">Article</th>
-                    <th>Stock</th>
-                    <th>Prix acht</th>
-                    <th>Prix ventes</th>
-                    <th>Quantité</th>
-                    <th>Total</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody class="itemsbon">
+        <div id="item-data-sc" class="table-responsive item-data-sc col-10">
+            <div class="d-flex justify-content-between bg-white">
+    
+                <div class="col-md-6 mb-3 productslistholder position-relative d-none">
+                    <button class="btn btn-success" onclick="$('.addproductholder').removeClass('d-none')">
+                        +
+                    </button>
+                    <strong>
+                        Produits
+                    </strong> <br>
+                    <select name="" id="" class="productslist form-control" style="width: 100%;"></select>
+                    <!-- <div class="mt-3 row">
+                        <div class="col-3">
+                            Qty
+                            <input type="number" class="addqty">
+                            <div class="addstock"></div>
+                        </div>
+                        <div class="col-3">
+                            Prix
+                            <input type="number" class="addprice">
+                        </div>
+                        <div class="col-3">
+                            Remise
+                            <input type="number" class="addremise">
+                        </div>
+                        <div class="col-3">
+    
+                            <button class="btn btn-primary w-100">+</button>
+                        </div>
+                        <input type="text" class="addname" hidden>
+                    </div> -->
+                    <!-- <div class="itemsselectholder"></div>
+                    <input type="text" class="form-control refexeption refexeptioninp" placeholder="REF exeption">
+                    <select class="select2 categoryid w-100 refexeption refexeptioncategory">
+                        {% for i in categories %}
+                        <option value="{{i.id}}">
+                            {{i.name}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <div class="exeptionresults d-flex flex-column">
+    
+                    </div> -->
+    
+                </div>
+            </div>
+            <div style="height: 60vh; overflow: scroll; position: relative;">
+                <table class="table table-bordered bg-white mt-2">
+                    <thead>
+                    <tr class="">
+                        <th style="width: 45%;">Article</th>
+                        <th>Stock</th>
+                        <th>Prix acht</th>
+                        <th>Prix ventes</th>
+                        <th>Quantité</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody class="itemsbon">
+                        {% for i in items %}
+                        <tr class="item-row" id="itemrow{{i.product.id}}">
+                            <td id="item-name" class="item-name">
+                                <strong class="invoice-item" id="invoice-item">
+                                    {{i.product.ref}} - {{i.product.car}}
+                                </strong>
+                            </td>
+                            <td class="stock">{{i.product.stock}}</td>
+                            <td class="prachat">{{i.product.pr_achat}}</td>
+                            <td><input type="hidden" class="prnet" value={{i.product.prnet}}><input min={{i.product.prnet}} value={{i.price}} class="form-control price" placeholder="Price" type="number" ><br><span class="text-danger errorprice d-none bg-white">Prix de vent doit etre superieur ou egal a prix net: {{i.product.prnet}}</span>
+                             </td>
+                            <td><input class="form-control qty" placeholder="Quantity" type="number" min=1 value="{{i.qty}}" ></td>
+                            <td class="total">{{i.total}}</td>
+                            <input type="hidden" class="productid" value={{i.product.id}}><td><i class="btn btn-danger delete" title="Supprimer" productid="{{i.product.id}}" onclick="removeline(event, '{{i.product.id}}')"></i>
+                            </td>
+                        </tr>
 
-                </tbody>
-            </table>
-
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    
             <div>
-
+    
                 <div class="borders shadow bg-white p-2 rounded">
                     <div class="table-responsive d-flex justify-content-between">
                         <table class="table table-bordered">
@@ -178,8 +202,8 @@
                             </tr>
                             <tr>
                                 <!-- <td><strong>Total Qty: </strong><span id="totalQty" style="color: red; font-weight: bold">0</span></td> -->
-
-                                <td class="text-right"><h4>Total: <span id="grandTotal" style="color:red">0</span></h4> </td>
+    
+                                <td class="text-right"><h4>Total: <span id="grandTotal" style="color:red">{{devis.total}}</span></h4> </td>
                                 <td></td>
                             </tr>
                             <tr>
@@ -195,20 +219,21 @@
                                 <td class="text-right"><strong>Rest</strong></td>
                                 <td><span id="remainingAmount">0</span></td>
                             </tr> -->
-
+    
                             </tbody>
                         </table>
                         <div class="">
-
+    
                             <a id="create-invoice" href="javascript:;" title="Create Invoice" class="btn btn-primary w-100 h-100" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing Order">Valider</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- <hr> -->
+        
 
     </div>
-</div>
 
 
 <!-- bon billing -->
@@ -218,113 +243,7 @@
 
 </div>
 
-<!-- add product -->
-<div class="container position-absolute bg-white addproductholder shadow-lg d-none rounded" style="right:0; width: 60vw;top:0; height: 100vh; z-index: 99;">
-    <div class="border p-3 ">
-        <div class="bg-primary d-flex justify-content-between">
-            <h3 class="text-center border-bottom text-white p-2">
-                Ajouter un produit
-            </h3>
-            <button onclick="$('.addproductholder').toggleClass('d-none')">X</button>
-        </div>
-        <form method="post" action="{% url 'product:addoneproduct' %}" class="addoneproductform">
-            {% csrf_token %}
-            <div class="row">
-                <div class="mb-3 col-6">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <strong for="">Categorie (*)</strong>
-                        <div class="addcategory col-4 d-none">
-                            <div class="my-1">
-                            <div class="input-group">
-                                <input type="text" class="form-control addcategoryinput" placeholder="Category">
-                                <div class="input-group-prepend">
-                                <div class="input-group-text" onclick="addcategoryajax(event)">+</div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        <span class="btn me-3 border" onclick="$('.addcategory').toggleClass('d-none');$('.addcategoryinput').focus()">+</span>
-                        <!-- <span class="fa fa-refresh btn btn-dark me-3 border refreshmark"></span> -->
-                    </div>
-                    <select style="width: 100%;" class="form-select checkref select2 notempty categoryselect" name="category">
-                        <option value=""></option>
-                        {% for i in children %}
-                        <option value="{{i.id}}">
-                            {{i.name.upper}}
-                        </option>
-                        {% endfor %}
-                    </select>
 
-                </div>
-                <div class="col-6">
-                    <div class="d-flex align-items-center justify-content-between">
-                      <strong>
-                        Marque (*)
-                      </strong>
-                      <div class="addmark col-4 d-none">
-                          <div class="my-1">
-                            <div class="input-group">
-                                <input type="text" class="form-control addmarkinput" placeholder="Marque">
-                                <div class="input-group-prepend">
-                                  <div class="input-group-text" onclick="addmarkajax(event)">+</div>
-                                </div>
-                            </div>
-                          </div>
-                      </div>
-                        <span class="btn me-3 border" onclick="$('.addmark').toggleClass('d-none');$('.addmarkinput').focus()">+</span>
-                        <!-- <span class="fa fa-refresh btn btn-dark me-3 refreshmark"></span> -->
-                    </div>
-                    <select style="width: 100%;" class="form-select checkref markselect select2 notempty" type="text" name="mark">
-                        <option value=""></option>
-                        {% for i in marks %}
-                        <option value="{{i.id}}">
-                            {{i.name.upper}}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-6
-                mb-3">
-                    <b class="text-center text-danger checkerror d-none">
-                        Deja existé
-                    </b>
-                    <div>
-                        <strong>
-                            Ref. (*)
-                        </strong>
-                        <input class="form-control checkref notempty" type="text" name="ref" >
-                    </div>
-
-                </div>
-                <div class="col-md-6
-                mb-3">
-                    <strong>
-                        Designation (*)
-                    </strong>
-                    <input  class="form-control notempty" type="text" name="car" >
-                </div>
-            </div>
-            <!-- <div class="mb-3">
-                <strong>
-                    Article
-                </strong>
-                <input class="form-control" required type="text" name="name" >
-            </div> -->
-
-
-
-
-        <input type="hidden" name="dest" value="receive">
-        <button type="submit" class="btn btn-primary addoneproductbtn" disabled onclick="addoneproduct(event)">Ajouter</button>
-
-        </form>
-
-    </div>
-</div>
 {% endblock %}
 
 {% block scripts %}
@@ -332,7 +251,14 @@
     <script src="{% static 'js/jquery.invoice.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery.scannerdetection.js' %}"></script>
     <script>
-
+        jQuery().invoice().init
+        // to store items in localstorage
+        pdcts=[]
+        {% for i in items %}
+        pdcts.push({{product.}})
+        {% endfor %}
+        localStorage.setItem('pdctsindevistobon', JSON.stringify(pdcts))
+        console.log('>>', pdcts)
         $('.checkref').on('change', ()=>{
             if ($('[name="ref"]').val()!='' && $('[name="mark"]').val()!='' && $('[name="pcategory"]').val()!=''){
                 console.log('checking')
@@ -358,14 +284,14 @@
         function removeline(event, productid){
             console.log('deletting;;;', productid)
             $(event.target).closest('tr').remove();
-            bonitems=JSON.parse(localStorage.getItem('bonitems'))
-            idsinbon=JSON.parse(localStorage.getItem('pdctsinbonsortie'))
+            bonitemsdevistobon=JSON.parse(localStorage.getItem('bonitemsdevistobon'))
+            idsinbon=JSON.parse(localStorage.getItem('pdctsindevistobon'))
             dx=idsinbon.indexOf(productid)
             idsinbon.splice(dx, 1)
-            bonitems.splice(dx, 1)
-            console.log(dx, idsinbon, bonitems)
-            localStorage.setItem('bonitems', JSON.stringify(bonitems))
-            localStorage.setItem('pdctsinbonsortie', JSON.stringify(idsinbon))
+            bonitemsdevistobon.splice(dx, 1)
+            console.log(dx, idsinbon, bonitemsdevistobon)
+            localStorage.setItem('bonitemsdevistobon', JSON.stringify(bonitemsdevistobon))
+            localStorage.setItem('pdctsindevistobon', JSON.stringify(idsinbon))
         }
         function saverow(event){
             tr=$(event.target).parent().parent()
@@ -376,8 +302,8 @@
             price=tr.find('.price').val()?tr.find('.price').val():0
             qty=tr.find('.qty').val()?tr.find('.qty').val():0
             productid=tr.find('.productid').val()
-            bonitems=JSON.parse(localStorage.getItem('bonitems')) || []
-            idsinbon=JSON.parse(localStorage.getItem('pdctsinbonsortie'))
+            bonitemsdevistobon=JSON.parse(localStorage.getItem('bonitemsdevistobon')) || []
+            idsinbon=JSON.parse(localStorage.getItem('pdctsindevistobon'))
             // get index of id
             if (idsinbon){
                 dx=idsinbon.indexOf(productid)
@@ -392,13 +318,13 @@
                 'qty':qty,
                 'productid':productid
             }
-            if (bonitems.length > 0){
-                bonitems[dx]=row
+            if (bonitemsdevistobon.length > 0){
+                bonitemsdevistobon[dx]=row
                 // insert it in index to remain the same order, order is important here
-                localStorage.setItem('bonitems',JSON.stringify(bonitems))
+                localStorage.setItem('bonitemsdevistobon',JSON.stringify(bonitemsdevistobon))
             }else{
-                bonitems.push(row)
-                localStorage.setItem('bonitems',JSON.stringify(bonitems))
+                bonitemsdevistobon.push(row)
+                localStorage.setItem('bonitemsdevistobon',JSON.stringify(bonitemsdevistobon))
 
             }
         }
@@ -408,13 +334,13 @@
                 $('.productslistholder').addClass('d-none')
             }
             else{
-                $('.productslistholder').removeClass('d-none')
+                //$('.productslistholder').removeClass('d-none')
                 // we store olse client id to display it when loading from localstorage
-                localStorage.setItem('clientbon', $(this).val())
+                //localStorage.setItem('clientdevis', $(this).val())
             }
         })
         // track bons in products
-        // localStorage.setItem('pdctsinbonsortie', '[]')
+        // localStorage.setItem('pdctsindevistobon', '[]')
         // localStorage.setItem('pdctsdetails', '[]')
         $(function(){
             $('.productslist').select2({
@@ -443,8 +369,8 @@
         // set products in local storage
         // remove prdcts localstorage when valider
         $('.productslist').on('change', function(){
-          pdcts=JSON.parse(localStorage.getItem('pdctsinbonsortie'))||[]
-          bonitems=JSON.parse(localStorage.getItem('bonitems'))||[]
+          pdcts=JSON.parse(localStorage.getItem('pdctsindevistobon'))||[]
+          bonitemsdevistobon=JSON.parse(localStorage.getItem('bonitemsdevistobon'))||[]
           console.log(pdcts)
 		
           parentdiv=$(this).parent().parent()
@@ -474,9 +400,9 @@
             // get index of id
 
 
-            bonitems[dx].qty=parseInt(bonitems[dx].qty)+1
+            bonitemsdevistobon[dx].qty=parseInt(bonitemsdevistobon[dx].qty)+1
             // insert it in index to remain the same order, order is important here
-            localStorage.setItem('bonitems',JSON.stringify(bonitems))
+            localStorage.setItem('bonitemsdevistobon',JSON.stringify(bonitemsdevistobon))
 
             let qtyinput=$(`#itemrow${id}`).find('.qty')
             let total=$(`#itemrow${id}`).find('.total')
@@ -491,14 +417,14 @@
             return
           }
           pdcts.push(id)
-          localStorage.setItem('pdctsinbonsortie', JSON.stringify(pdcts))
+          localStorage.setItem('pdctsindevistobon', JSON.stringify(pdcts))
           // add it to items localstorage
-          console.log(bonitems)
-          bonitems.push(row)
-          localStorage.setItem('bonitems',JSON.stringify(bonitems))
+          console.log(bonitemsdevistobon)
+          bonitemsdevistobon.push(row)
+          localStorage.setItem('bonitemsdevistobon',JSON.stringify(bonitemsdevistobon))
             //let thisprice=0
             
-            $('.itemsbon').prepend(`<tr class="item-row" id="itemrow${id}""><td id="item-name" class="item-name"><strong class="invoice-item" id="invoice-item">${ref} - ${car}</strong></td><td class="stock ${stock==0 ? "bg-danger text-white" : ""}">${stock}</td><td class="prachat">${pr_achat}</td><td><input type="hidden" class="prnet" value=${prnet}><input min=${prnet} value=${thisprice} class="form-control price" placeholder="Price" type="number" oninput="saverow(event)"><br><span class="text-danger errorprice d-none bg-white">Prix de vent doit etre superieur ou egal a prix net: ${prnet}</span> </td><td><input class="form-control qty" placeholder="Quantity" type="number" min=1 value=0 oninput="saverow(event)"></td><td class="total"></td><input type="hidden" class="productid" value=${id}><td><i class="btn btn-danger delete" title="Supprimer" productid="${id}" onclick="removeline(event, '${id}')"></i></td></tr>`);
+            $('.itemsbon').prepend(`<tr class="item-row" id="itemrow${id}""><td id="item-name" class="item-name"><strong class="invoice-item" id="invoice-item">${ref} - ${car}</strong></td><td class="stock ${stock==0 ? "bg-danger text-white" : ""}">${stock}</td><td class="prachat">${pr_achat}</td><td><input type="hidden" class="prnet" value=${prnet}><input min=${prnet} value=${thisprice} class="form-control price" placeholder="Price" type="number" ><br><span class="text-danger errorprice d-none bg-white">Prix de vent doit etre superieur ou egal a prix net: ${prnet}</span> </td><td><input class="form-control qty" placeholder="Quantity" type="number" min=1 value=0 ></td><td class="total"></td><input type="hidden" class="productid" value=${id}><td><i class="btn btn-danger delete" title="Supprimer" productid="${id}" onclick="removeline(event, '${id}')"></i></td></tr>`);
 
                 jQuery().invoice().init
         
@@ -585,11 +511,11 @@
     })
     $(document).ready(function () {
 
-        bonitems=JSON.parse(localStorage.getItem('bonitems'))||[]
-        if (bonitems.length>0){
-            $('[name="customer"]').select2().val(localStorage.getItem('clientbon')).trigger('change')
-            for (i of bonitems){
-                $('.itemsbon').append(`<tr class="item-row" id="itemrow${i.productid}""><td id="item-name" class="item-name"><strong class="invoice-item" id="invoice-item">${i.article}</strong></td><td class="stock ${i.stock==0 ? "bg-danger text-white" : ""}">${i.stock}</td><td class="prachat">${i.prachat}</td><td><input type="hidden" class="prnet" value=${i.prnet}><input min=${i.prnet} value=${i.price} class="form-control price" placeholder="Price" type="number" oninput="saverow(event)"><br><span class="text-danger errorprice d-none bg-white">Prix de vent doit etre superieur ou egal a prix net: ${i.prnet}</span> </td><td><input class="form-control qty" placeholder="Quantity" type="number" min=1 value="${i.qty}" oninput="saverow(event)"></td><td class="total">${i.qty*i.price}</td><input type="hidden" class="productid" value=${i.productid}><td><i class="btn btn-danger delete" title="Supprimer" productid="${i.productid}" onclick="removeline(event, '${i.productid}')"></i></td></tr>`);
+        bonitemsdevistobon=JSON.parse(localStorage.getItem('bonitemsdevistobon'))||[]
+        if (bonitemsdevistobon.length>0){
+            $('[name="customer"]').select2().val(localStorage.getItem('clientdevis')).trigger('change')
+            for (i of bonitemsdevistobon){
+                $('.itemsbon').append(`<tr class="item-row" id="itemrow${i.productid}""><td id="item-name" class="item-name"><strong class="invoice-item" id="invoice-item">${i.article}</strong></td><td class="stock ${i.stock==0 ? "bg-danger text-white" : ""}">${i.stock}</td><td class="prachat">${i.prachat}</td><td><input type="hidden" class="prnet" value=${i.prnet}><input min=${i.prnet} value=${i.price} class="form-control price" placeholder="Price" type="number" ><br><span class="text-danger errorprice d-none bg-white">Prix de vent doit etre superieur ou egal a prix net: ${i.prnet}</span> </td><td><input class="form-control qty" placeholder="Quantity" type="number" min=1 value="${i.qty}" ></td><td class="total">${i.qty*i.price}</td><input type="hidden" class="productid" value=${i.productid}><td><i class="btn btn-danger delete" title="Supprimer" productid="${i.productid}" onclick="removeline(event, '${i.productid}')"></i></td></tr>`);
 
                 jQuery().invoice().init
             }
@@ -599,34 +525,34 @@
         }
         // add client
         // telephone obligatoir (avoid duolicate)
-        $('.addclientbtn').on('click', ()=>{
-            if($('.customer').val() == '' || $('.customer_phone').val()=='' || $('.customer_phone').val().length!=10){
-                console.log('error')
-                $('.customererror').show();
-                return false;
-            }else{
+        // $('.addclientbtn').on('click', ()=>{
+        //     if($('.customer').val() == '' || $('.customer_phone').val()=='' || $('.customer_phone').val().length!=10){
+        //         console.log('error')
+        //         $('.customererror').show();
+        //         return false;
+        //     }else{
 
-                $('.addclientbtn').addClass('disabled')
-                $.post(
-                    '{% url "product:addclient" %}',
-                    {
-                        'name':$('.customer').val(),
-                        'phone':$('.customer_phone').val(),
-                        'ice':$('.customer_ice').val(),
-                        'address':$('.customer_address').val(),
-                        'csrfmiddlewaretoken': '{{ csrf_token }}'
-                    },
-                    function(data){
-                        alertify.success('OK')
-                        // populate select2
-                        option=`<option value="${data.id}">${$('.customer').val()} - ${$('.customer_phone').val()}</option>`
-                        $('[name="customer"]').append(option)
-                        //hide modal
-                        $('#exampleModal').modal('hide')
-                    }
-                )
-            }
-        })
+        //         $('.addclientbtn').addClass('disabled')
+        //         $.post(
+        //             '{% url "product:addclient" %}',
+        //             {
+        //                 'name':$('.customer').val(),
+        //                 'phone':$('.customer_phone').val(),
+        //                 'ice':$('.customer_ice').val(),
+        //                 'address':$('.customer_address').val(),
+        //                 'csrfmiddlewaretoken': '{{ csrf_token }}'
+        //             },
+        //             function(data){
+        //                 alertify.success('OK')
+        //                 // populate select2
+        //                 option=`<option value="${data.id}">${$('.customer').val()} - ${$('.customer_phone').val()}</option>`
+        //                 $('[name="customer"]').append(option)
+        //                 //hide modal
+        //                 $('#exampleModal').modal('hide')
+        //             }
+        //         )
+        //     }
+        // })
 
         // var item_list = '<select id="all-items" class="form-select select2"><option value="0">Articles</option>';
         // // create select from pdct, its a registered
@@ -736,9 +662,9 @@
                         returned_cash: returned_cash,
                         items: JSON.stringify(items)
                     }, function (result, status) {
-                        localStorage.removeItem('bonitems')
-                        localStorage.removeItem('pdctsinbonsortie')
-                        localStorage.removeItem('clientbon')
+                        localStorage.removeItem('bonitemsdevistobon')
+                        localStorage.removeItem('pdctsindevistobon')
+                        localStorage.removeItem('clientdevis')
                         //window.location.href = `/ledger/customer/${$('select[name="customer"]').val()}/ledger/details/`;/sales/bon/1
                         window.location.href = `/sales/bon/${result.invoice_id}`
                         //

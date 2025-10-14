@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
     <style>
-      
       @media print {
          .livraison-holder {
              height: 27.5cm; /* Slightly less than the maximum printable height */
@@ -36,75 +35,31 @@
     <link href="/static/css/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
-    
 <div id="printfc{{facture.id}}" style="position:relative;">
-
   {% for i in orderitems %}
   {% if forloop.counter == orderitems|length %}
   <!-- last iteration -->
   <div class="postion-relative px-5 facture{{facture.id}}holder p-3" style="min-height: 29.7cm;width: 21cm; border:1px solid;">
-    <div class="row p-2 text-center">
+    <div class="row border p-2 text-center">
       <img class="col-3" src="/media/logo.jpg" style="width: 15%">
-      {{user.retailer_user.retailer.name}}
-      <div class="row justify-content-between">
-        <div class="col-6">
-          <table class="table table-bordered">
-            <tr>
-              <td>N° Facture</td>
-              <td>
-                {{facture.facture_no}}
-              </td>
-            </tr>
-            <tr>
-              <td>Client</td>
-              <td>
-                {{facture.client.customer_name.upper}}
-              </td>
-            </tr>
-            <tr>
-              <td>ICE</td>
-              <td>
-                {{facture.client.ice}}
-              </td>
-            </tr>
-            <tr>
-              <td>Address</td>
-              <td>
-                {{facture.client.address.upper}}
-              </td>
-            </tr>
-           </table>
-        </div>
-        <div class="col-3">
-          <table class="table table-bordered">
-          <tr>
-            <td>Date</td>
-            <td>
-              {{facture.date|date:"d/m/Y"}}
-            </td>
-          </tr>
-          
-          </table>
-        </div>
-       
-      </div>
-      <!-- <div class="d-flex justify-content-between col-9">
+      <!-- {{user.retailer_user.retailer.name}} -->
+      <div class="d-flex justify-content-between col-9">
           <div>
             <div
-              >Facture N°: <strong>{{facture.facture_no}}</strong>
+              >Bon N°: <strong>{{facture.receipt_no}}</strong>
             </div>
             <div>
-              Date: <strong>{{facture.date|date:"d/m/Y"}}</strong>
+              Date: <strong>{{facture.dateavoir|date:"d/m/Y"}}</strong>
             </div>
           </div>
           <div>
             <div>
-              cleint: <strong>{{facture.client.customer_name.upper}} </strong>
+              cleint: <strong>{{facture.customer.customer_name.upper}} </strong>
             </div>
 
 
           </div>
-        </div> -->
+        </div>
     </div>
 
     <!-- facture header 
@@ -112,15 +67,15 @@
         <div class="d-flex justify-content-between">
           <div>
             <div
-              >Bon N°: <strong>{{facture.facture_no}}</strong>
+              >Bon N°: <strong>{{facture.receipt_no}}</strong>
             </div>
             <div>
-              Date: <strong>{{facture.datebon|date:"d/m/Y"}}</strong>
+              Date: <strong>{{facture.dateavoir|date:"d/m/Y"}}</st>
             </div>
           </div>
           <div>
             <div>
-              cleint: <strong>{{facture.client.customer_name.upper}} </strong>
+              cleint: <strong>{{facture.customer.customer_name.upper}} </strong>
             </div>
 
 
@@ -131,7 +86,7 @@
     </div>-->
 
     <!-- facture items -->
-    <div class="orderitems bg-white rounded p-2 position-relative">
+    <div class="orderitems mt-3 bg-white rounded p-2 position-relative">
 
       <table class="table table-bordered fcitems" style="border-color: black;font-family: serif; font-size:13px;">
         <thead style="font-size: 10px;
@@ -153,7 +108,7 @@
                       {% if not forloop.counter == i|length %}<br>{% endif %}
                       {% endfor %}
                     </td>
-                  <td style="height: 160mm;white-space: nowrap;padding-left:3px">
+                  <td style="height: 190mm;white-space: nowrap;padding-left:3px">
                       {% for v in i %}
                         {{v.product.car.upper|slice:"50"}}
                         {% if not forloop.counter == i|length %}<br>{% endif %}
@@ -161,7 +116,7 @@
                   </td>
                   <td class="text-center">
                     {% for v in i %}
-                    {{v.qty}}
+                    {{v.quantity}}
                     {% if not forloop.counter == i|length %}<br>{% endif %}
                     {% endfor %}
                   </td>
@@ -187,158 +142,58 @@
                 </tr>
         </tbody>
         <tfoot class="text-center">
-          <tr style="font-size: 10px;
-          font-weight: 800;" class="text-center">
-            <td colspan="4">Total HT</td>
-            <td>
-              <strong class="htfc{{facture.id}}" style="font-size: 15px">
-                {{facture.ht|floatformat:2|intspace}}
-              </strong>
-            </td>
-          </tr>
-          <tr style="font-size: 10px;
-          font-weight: 800;" class="text-center">
-            <td colspan="4">TVA</td>
-            <td>
-              <strong class="tvafc{{facture.id}}" style="font-size: 15px">
-                {{facture.tva|floatformat:2|intspace}}
-              </strong>
-            </td>
-          </tr>
-          <tr style="font-size: 10px;
-          font-weight: 800;" class="text-center">
-            <td colspan="4">Total TTC</td>
-            <td>
-              <strong class="ttcgc{{facture.id}}" style="font-size: 15px">
-                {{facture.total|floatformat:2|intspace}} {{text}}
-              </strong>
-            </td>
-          </tr>
+
         </tfoot>
       </table>
       
 
     </div>
-    <div>
-      arrête la presente facture à la somme de:
-        <strong class="frenchword text-uppercase"></strong>
-    </div>
-    <!-- <div class="text-center float-end">
-      <table class="table table-bordered">
-        
+
+    <div class="text-center">
+      <table class="table table-bordered" style="margin-bottom: 35px;">
         <tr style="font-size: 10px;
         font-weight: 800;border: 1px solid">
           <td colspan="10">
             <strong style="font-size: 13px" >
-              Total HT
+              Total
             </strong>
           </td>
 
           <td>
             <strong class="ttcgc{{facture.id}}" style="font-size: 15px">
-              {{facture.ht|floatformat:2|intspace}}
-            </strong>
-          </td>
-        </tr>
-        <tr style="font-size: 10px;
-        font-weight: 800;border: 1px solid">
-          <td colspan="10">
-            <strong style="font-size: 13px" >
-              TVA
-            </strong>
-          </td>
-
-          <td>
-            <strong class="ttcgc{{facture.id}}" style="font-size: 15px">
-              {{facture.tva|floatformat:2|intspace}}
-            </strong>
-          </td>
-        </tr>
-        <tr style="font-size: 10px;
-        font-weight: 800;border: 1px solid">
-          <td colspan="10">
-            <strong style="font-size: 13px" >
-              Total TTC
-            </strong>
-          </td>
-
-          <td>
-            <strong class="ttcgc{{facture.id}}" style="font-size: 15px">
-              {{facture.total|floatformat:2|intspace}} {{text}}
+              {{facture.grand_total|floatformat:2|intspace}} {{text}}
             </strong>
           </td>
         </tr>
       </table>
-       <small>Sold client: {{sold}}DH</small>
-    </div> -->
+
+    </div>
     <hr>
       Addresse: SIDI MOUMEN JDID GROUP 3 N° 33 CASABLANCA PATENTE: 66215208 RC: 661741 ICE: 003657974000005 IF: 66215208 TEL: 0648482060
   </div>
   {% else %}
   <div class="postion-relative px-5 facture{{facture.id}}holder p-3" style="min-height: 29.7cm;width: 21cm; border:1px solid;">
 
-    <div class="row p-2 text-center">
+    <div class="row border p-2 text-center">
       <img class="col-3" src="/media/logo.jpg" style="width: 15%">
-      {{user.retailer_user.retailer.name}}
-      <div class="row justify-content-between">
-        <div class="col-6">
-          <table class="table table-bordered">
-            <tr>
-              <td>N° Facture</td>
-              <td>
-                {{facture.facture_no}}
-              </td>
-            </tr>
-            <tr>
-              <td>Client</td>
-              <td>
-                {{facture.client.customer_name.upper}}
-              </td>
-            </tr>
-            <tr>
-              <td>ICE</td>
-              <td>
-                {{facture.client.ice}}
-              </td>
-            </tr>
-            <tr>
-              <td>Address</td>
-              <td>
-                {{facture.client.address.upper}}
-              </td>
-            </tr>
-           </table>
-        </div>
-        <div class="col-3">
-          <table class="table table-bordered">
-          <tr>
-            <td>Date</td>
-            <td>
-              {{facture.date|date:"d/m/Y"}}
-            </td>
-          </tr>
-          
-          </table>
-        </div>
-       
-      </div>
-      <!-- <div class="d-flex justify-content-between col-9">
+      <!-- {{user.retailer_user.retailer.name}} -->
+      <div class="d-flex justify-content-between col-9">
           <div>
             <div
-              >Facture N°: <strong>{{facture.facture_no}}</strong>
+              >Bon N°: <strong>{{facture.receipt_no}}</strong>
             </div>
             <div>
-              Date: <strong>{{facture.date|date:"d/m/Y"}}</strong>
+              Date: <strong>{{facture.dateavoir|date:"d/m/Y"}}</strong>
             </div>
           </div>
           <div>
             <div>
-              cleint: <strong>{{facture.client.customer_name.upper}} </strong>
+              cleint: <strong>{{facture.customer.customer_name.upper}} </strong>
             </div>
 
 
           </div>
-        </div> -->
+        </div>
     </div>
 
     <!-- facture header 
@@ -346,15 +201,15 @@
         <div class="d-flex justify-content-between">
           <div>
             <div
-              >Bon N°: <strong>{{facture.facture_no}}</strong>
+              >Bon N°: <strong>{{facture.receipt_no}}</strong>
             </div>
             <div>
-              Date: <strong>{{facture.datebon|date:"d/m/Y"}}</strong>
+              Date: <strong>{{facture.dateavoir|date:"d/m/Y"}}</st>
             </div>
           </div>
           <div>
             <div>
-              cleint: <strong>{{facture.client.customer_name.upper}} </strong>
+              cleint: <strong>{{facture.customer.customer_name.upper}} </strong>
             </div>
 
 
@@ -395,7 +250,7 @@
             </td>
             <td class="text-center">
               {% for v in i %}
-              {{v.qty}}
+              {{v.quantity}}
               {% if not forloop.counter == i|length %}<br>{% endif %}
               {% endfor %}
             </td>
@@ -433,18 +288,9 @@
 
 </div>
 
-<script src="/static/js/spellingnumbers.js"></script>
+
 <script>
 
-  $('tfoot').find('td').css('padding', '0px')
-    $('.frenchword').text($.spellingNumber({{facture.total|floatformat:2}}, {
-    lang:'fr',
-    wholesUnit:"Dirhams",
-    fractionUnit:"cents",
-    digitsLengthW2F: 2,
-    decimalSeperator:"et"
-
-  }))
     function entete(){
       if ($('.factureheader').hasClass('show')) {
         $('.factureheader').removeClass('show')

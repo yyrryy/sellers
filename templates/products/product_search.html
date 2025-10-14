@@ -86,7 +86,6 @@
             {{item.price}}
         </b>
     </td>
-    {% if not home %}
     <td>
         <!-- <button type="button" class="btn btn-success update fa fa-edit" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="{{item.id}}" title="modifier"> -->
         <button type="button" class="btn btn-success fa fa-edit" data-id="{{item.id}}" title="modifier" onclick="productdata('{{item.id}}')">
@@ -96,20 +95,8 @@
 
         
     </td>
-    {% endif %}
 
-    {% if home %}
-    <td>
-        <a  href="{% url 'product:producthistory' id=item.id %}"><button class="btn btn-danger btn-xs fa fa-history" title="Historique"></button></a>
-    </td>
-        {% if item.stock != 0 %}
-        <!-- <td>
-            <input type="number" class="form-control priceinput" placeholder="Prix" {% if item.getprices|length == 1 %} hidden {% endif %} value="{{item.pr_achat}}">
-            <input class="form-control sortieinput" type="number" min="0" max="{{item.stock}}" name="sortieqty" placeholder="Qty">
-            <button class="btn btn-primary updatestockbtn fa fa-check w-100" id="{{item.id}}" categoryid="{{item.category.id}}"></button>
-        </td> -->
-    {% endif %}
-    {% endif %}
+    
 </tr>
 {% empty %}
     <tr>

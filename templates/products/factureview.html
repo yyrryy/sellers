@@ -61,7 +61,7 @@
 
     <div class="shadow rounded p-2 bg-white px-md-5">
         <h5>
-            Bon Sortie #{{nbon}}
+            Facture #{{facturenumber}}
         </h5>
         <div class="alert alert-danger text-center item-error" style="display: none;" role="alert">
         </div>
@@ -182,7 +182,7 @@
                                 <td class="text-right"><h4>Total: <span id="grandTotal" style="color:red">0</span></h4> </td>
                                 <td></td>
                             </tr>
-                            <tr>
+                            <tr hidden>
                                 <td class="text-right">
                                     <strong>Payé</strong>
                                 </td>
@@ -358,14 +358,14 @@
         function removeline(event, productid){
             console.log('deletting;;;', productid)
             $(event.target).closest('tr').remove();
-            bonitems=JSON.parse(localStorage.getItem('bonitems'))
-            idsinbon=JSON.parse(localStorage.getItem('pdctsinbonsortie'))
+            factureitems=JSON.parse(localStorage.getItem('factureitems'))
+            idsinbon=JSON.parse(localStorage.getItem('pdctsinfacture'))
             dx=idsinbon.indexOf(productid)
             idsinbon.splice(dx, 1)
-            bonitems.splice(dx, 1)
-            console.log(dx, idsinbon, bonitems)
-            localStorage.setItem('bonitems', JSON.stringify(bonitems))
-            localStorage.setItem('pdctsinbonsortie', JSON.stringify(idsinbon))
+            factureitems.splice(dx, 1)
+            console.log(dx, idsinbon, factureitems)
+            localStorage.setItem('factureitems', JSON.stringify(factureitems))
+            localStorage.setItem('pdctsinfacture', JSON.stringify(idsinbon))
         }
         function saverow(event){
             tr=$(event.target).parent().parent()
@@ -376,8 +376,8 @@
             price=tr.find('.price').val()?tr.find('.price').val():0
             qty=tr.find('.qty').val()?tr.find('.qty').val():0
             productid=tr.find('.productid').val()
-            bonitems=JSON.parse(localStorage.getItem('bonitems')) || []
-            idsinbon=JSON.parse(localStorage.getItem('pdctsinbonsortie'))
+            factureitems=JSON.parse(localStorage.getItem('factureitems')) || []
+            idsinbon=JSON.parse(localStorage.getItem('pdctsinfacture'))
             // get index of id
             if (idsinbon){
                 dx=idsinbon.indexOf(productid)
@@ -392,13 +392,13 @@
                 'qty':qty,
                 'productid':productid
             }
-            if (bonitems.length > 0){
-                bonitems[dx]=row
+            if (factureitems.length > 0){
+                factureitems[dx]=row
                 // insert it in index to remain the same order, order is important here
-                localStorage.setItem('bonitems',JSON.stringify(bonitems))
+                localStorage.setItem('factureitems',JSON.stringify(factureitems))
             }else{
-                bonitems.push(row)
-                localStorage.setItem('bonitems',JSON.stringify(bonitems))
+                factureitems.push(row)
+                localStorage.setItem('factureitems',JSON.stringify(factureitems))
 
             }
         }
@@ -410,11 +410,11 @@
             else{
                 $('.productslistholder').removeClass('d-none')
                 // we store olse client id to display it when loading from localstorage
-                localStorage.setItem('clientbon', $(this).val())
+                localStorage.setItem('clientfacture', $(this).val())
             }
         })
         // track bons in products
-        // localStorage.setItem('pdctsinbonsortie', '[]')
+        // localStorage.setItem('pdctsinfacture', '[]')
         // localStorage.setItem('pdctsdetails', '[]')
         $(function(){
             $('.productslist').select2({
@@ -423,7 +423,7 @@
                 ajax: {
                 type:'get',
                 dataType: 'json',
-                url: '/product/searchproduct',
+                url: '/product/searchproduct?facture=1',
                 data: function (params) {
                     var query = {
                     term: params.term,
@@ -443,8 +443,8 @@
         // set products in local storage
         // remove prdcts localstorage when valider
         $('.productslist').on('change', function(){
-          pdcts=JSON.parse(localStorage.getItem('pdctsinbonsortie'))||[]
-          bonitems=JSON.parse(localStorage.getItem('bonitems'))||[]
+          pdcts=JSON.parse(localStorage.getItem('pdctsinfacture'))||[]
+          factureitems=JSON.parse(localStorage.getItem('factureitems'))||[]
           console.log(pdcts)
 		
           parentdiv=$(this).parent().parent()
@@ -456,7 +456,11 @@
             alertify.error('Deja')
             return
           }
-          $.get('/product/clientprice', {'clientid': $('[name="customer"]').val(), 'productid':id}, (data) => {
+          if (parseInt(stock)<=0){
+            alertify.error('Stock Facture est null')
+            return
+          }
+          $.get('/product/clientpricefc', {'clientid': $('[name="customer"]').val(), 'productid':id}, (data) => {
                     $('.clientprice').text(data.price);
                     thisprice=data.price
                     row={
@@ -474,9 +478,9 @@
             // get index of id
 
 
-            bonitems[dx].qty=parseInt(bonitems[dx].qty)+1
+            factureitems[dx].qty=parseInt(factureitems[dx].qty)+1
             // insert it in index to remain the same order, order is important here
-            localStorage.setItem('bonitems',JSON.stringify(bonitems))
+            localStorage.setItem('factureitems',JSON.stringify(factureitems))
 
             let qtyinput=$(`#itemrow${id}`).find('.qty')
             let total=$(`#itemrow${id}`).find('.total')
@@ -491,11 +495,11 @@
             return
           }
           pdcts.push(id)
-          localStorage.setItem('pdctsinbonsortie', JSON.stringify(pdcts))
+          localStorage.setItem('pdctsinfacture', JSON.stringify(pdcts))
           // add it to items localstorage
-          console.log(bonitems)
-          bonitems.push(row)
-          localStorage.setItem('bonitems',JSON.stringify(bonitems))
+          console.log(factureitems)
+          factureitems.push(row)
+          localStorage.setItem('factureitems',JSON.stringify(factureitems))
             //let thisprice=0
             
             $('.itemsbon').prepend(`<tr class="item-row" id="itemrow${id}""><td id="item-name" class="item-name"><strong class="invoice-item" id="invoice-item">${ref} - ${car}</strong></td><td class="stock ${stock==0 ? "bg-danger text-white" : ""}">${stock}</td><td class="prachat">${pr_achat}</td><td><input type="hidden" class="prnet" value=${prnet}><input min=${prnet} value=${thisprice} class="form-control price" placeholder="Price" type="number" oninput="saverow(event)"><br><span class="text-danger errorprice d-none bg-white">Prix de vent doit etre superieur ou egal a prix net: ${prnet}</span> </td><td><input class="form-control qty" placeholder="Quantity" type="number" min=1 value=0 oninput="saverow(event)"></td><td class="total"></td><input type="hidden" class="productid" value=${id}><td><i class="btn btn-danger delete" title="Supprimer" productid="${id}" onclick="removeline(event, '${id}')"></i></td></tr>`);
@@ -585,10 +589,10 @@
     })
     $(document).ready(function () {
 
-        bonitems=JSON.parse(localStorage.getItem('bonitems'))||[]
-        if (bonitems.length>0){
-            $('[name="customer"]').select2().val(localStorage.getItem('clientbon')).trigger('change')
-            for (i of bonitems){
+        factureitems=JSON.parse(localStorage.getItem('factureitems'))||[]
+        if (factureitems.length>0){
+            $('[name="customer"]').select2().val(localStorage.getItem('clientfacture')).trigger('change')
+            for (i of factureitems){
                 $('.itemsbon').append(`<tr class="item-row" id="itemrow${i.productid}""><td id="item-name" class="item-name"><strong class="invoice-item" id="invoice-item">${i.article}</strong></td><td class="stock ${i.stock==0 ? "bg-danger text-white" : ""}">${i.stock}</td><td class="prachat">${i.prachat}</td><td><input type="hidden" class="prnet" value=${i.prnet}><input min=${i.prnet} value=${i.price} class="form-control price" placeholder="Price" type="number" oninput="saverow(event)"><br><span class="text-danger errorprice d-none bg-white">Prix de vent doit etre superieur ou egal a prix net: ${i.prnet}</span> </td><td><input class="form-control qty" placeholder="Quantity" type="number" min=1 value="${i.qty}" oninput="saverow(event)"></td><td class="total">${i.qty*i.price}</td><input type="hidden" class="productid" value=${i.productid}><td><i class="btn btn-danger delete" title="Supprimer" productid="${i.productid}" onclick="removeline(event, '${i.productid}')"></i></td></tr>`);
 
                 jQuery().invoice().init
@@ -720,7 +724,7 @@
                 } else {
                 $('#create-invoice').addClass('disabled')
                 console.log("sending");
-                $.post("{% url 'sales:generate_invoice_api' %}", {
+                $.get("/product/createfacture", {
                         datebon:datebon,
                         timebon:timebon,
                         customer_id: customer_id,
@@ -736,11 +740,11 @@
                         returned_cash: returned_cash,
                         items: JSON.stringify(items)
                     }, function (result, status) {
-                        localStorage.removeItem('bonitems')
-                        localStorage.removeItem('pdctsinbonsortie')
-                        localStorage.removeItem('clientbon')
+                        localStorage.removeItem('factureitems')
+                        localStorage.removeItem('pdctsinfacture')
+                        localStorage.removeItem('clientfacture')
                         //window.location.href = `/ledger/customer/${$('select[name="customer"]').val()}/ledger/details/`;/sales/bon/1
-                        window.location.href = `/sales/bon/${result.invoice_id}`
+                        window.location.href = "/product/listfactures/"
                         //
                         // refresh
                         //location.reload();
