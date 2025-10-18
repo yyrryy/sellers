@@ -195,7 +195,7 @@ class Product(models.Model):
     minstock=models.FloatField(default=0.00)
     car = models.CharField(max_length=5000, blank=True, null=True, default=None)
     bar_code = models.CharField(max_length=500, unique=True, blank=True, null=True)
-    etagere = models.CharField(max_length=500, unique=True, blank=True, null=True)
+    etagere = models.CharField(max_length=500,blank=True, null=True)
     image = models.ImageField(upload_to='product_images/', blank=True, null=True)
     def getsimillars(self):
         originref=self.ref.split()[0]
