@@ -3103,10 +3103,10 @@ def getsupplierprice(request):
     supplierid=request.GET.get('supplierid')
     productid=request.GET.get('productid')
     try:
-        supplierprice=Supplierprice.objects.filter(supplier_id=supplierid, product_id=productid).first()
+        supplierprice=StockIn.objects.filter(reciept__supplier_id=supplierid, product_id=productid).first()
         return JsonResponse({
             'price':supplierprice.price,
-            'qty':supplierprice.qty,
+            'qty':supplierprice.quantity,
             'remise':supplierprice.remise
         })
     except:
