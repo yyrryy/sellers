@@ -27,7 +27,7 @@
     </td>
     <td class="car">
         <b>
-            {{ item.car.upper }}
+            {{ item.car.upper }} {%if item.etagere%}- {{item.etagere.upper}}{%endif%} 
         </b>
     </td>
     <td class="product_stock" style="background: {%if item.stock == 0%}red{%elif item.stock < 0%}#0d6efd59{%elif item.stock <= item.minstock%} yellow {%else%}yellowgreen{%endif%}; color:black;">
