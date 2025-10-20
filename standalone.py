@@ -14,11 +14,11 @@ def get_local_ip():
 
 ip = get_local_ip()
 def runserver():
-    os.system(f'python manage.py runserver {ip}:80')
+    os.system(f'python manage.py runserver {ip}:8000')
 
 def lunchchrome():
     sleep(2)  # wait for server
-    os.system(f'start chrome http://{ip}')
+    os.system(f'start chrome http://{ip}:8000')
 
 t1 = Thread(target=runserver)
 t2 = Thread(target=lunchchrome)
