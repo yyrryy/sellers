@@ -84,17 +84,25 @@ WSGI_APPLICATION = 'sellers.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mydb',        # Replace with your database name
-        'USER': 'postgres',     # Replace with your database user
-        'PASSWORD': 'gadwad123', # Replace with your database password
-        'HOST': 'localhost',         # Or your database server address
-        'PORT': '5432',              # Default PostgreSQL port
+in1337 = os.getenv('HOME')=='/home/aaliali'
+if in1337:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'mydb',        # Replace with your database name
+            'USER': 'postgres',     # Replace with your database user
+            'PASSWORD': 'gadwad123', # Replace with your database password
+            'HOST': 'localhost',         # Or your database server address
+            'PORT': '5432',              # Default PostgreSQL port
+        }
+    }
 
 
 # Password validation
