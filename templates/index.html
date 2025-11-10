@@ -6,61 +6,37 @@
 <!-- for accountant -->
 {% if user.groups.all.0.name == 'account' %}
 <div class="row mb-5 p-2">
-    <div class="col-6 row">
-        <div class=" row">
-            <h3 class="bg-white p-2">Client</h3>
-            
-            <div class="col-6">
+    <div class="row">
+            <div class="col-3">
                 <div class="bg-white bg-white d-flex justify-content-between p-2 align-items-center rounded">
-                    <a href="/product/listfactures">
-                        <h4>List factures</h4>
+                    <a href="{% url 'sales:create_invoice' %}">
+                        <h4>Bon sortie</h4>
                     </a>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-3">
                 <div class="bg-white bg-white d-flex justify-content-between p-2 align-items-center rounded">
-                    <a href="/product/factureview">
-                        <h4>+ Facture client</h4>
+                    <a href="{% url 'sales:avoirclient' %}">
+                        <h4>Avoir</h4>
+                    </a>
+                </div>
+                
+            </div>
+            <div class="col-3">
+                <div class="bg-white bg-white d-flex justify-content-between p-2 align-items-center rounded">
+                    <a href="{% url 'sales:invoice_list' %}">
+                        <h4>List bons</h4>
                     </a>
                 </div>
                 
             </div>
             
             
-        </div>
-        <strong>
-            Total tva client:
-            {{total_tva_client}} DH
-        </strong>
+            
+       
         
     </div>
-    <div class="col-6">
-        <div class=" row">
-            <h3 class="bg-white p-2">Fournisseur</h3>
-            
-            <div class="col-6">
-                <div class="bg-white bg-white d-flex justify-content-between p-2 align-items-center rounded">
-                    <a href="/product/bonsentrees?facture=1">
-                        <h4>List factures</h4>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-6">
-                <div class="bg-white bg-white d-flex justify-content-between p-2 align-items-center rounded">
-                    <a href="/product/supply?facture=1">
-                        <h4>+ Facture achat</h4>
-                    </a>
-                </div>
-            </div>
-            
-            
-        </div>
-        <strong>
-            Total tva fournisseur:
-            {{total_tva_fournisseur}} DH
-        </strong>
-    </div>
+    
 </div>
 {% else %}
 <div class=" mb-5">
@@ -188,7 +164,7 @@
 </div>
 {% endif %}
 <h1 style="text-align: center; font-size: 8em;" class="text-primary">
-    {{ request.user.retailer_user.retailer.name }} {% if user.groups.all.0.name == 'account' %} (Facturation){% endif %}
+    {{ request.user.retailer_user.retailer.name }}
 </h1>
 
 {% endblock %}

@@ -416,6 +416,7 @@ table{
         ">
           <div>
             <!-- Example single danger button -->
+            {% if user.groups.all.0.name != 'account' %}
             <div class="dropdown">
               <button class="btn btn-dark" onclick="$('.sidebar').toggleClass('w15');$('.sidebar').toggleClass('w2')">
                 ☰
@@ -455,6 +456,7 @@ table{
                 
               </div>
             </div>
+            {% endif %}
             <a class="btn btn-dark fa fa-home" href="/">
                 
             </a>
@@ -462,7 +464,7 @@ table{
             <!-- <button class="btn btn-dark" onclick="$('.sidebar').toggleClass('w15');$('.sidebar').toggleClass('w2')">
               ☰
             </button> -->
-             {{ request.user.retailer_user.retailer.name }} {% if  user.groups.all.0.name == 'account' %}-Facturation{% endif %}
+             {{ request.user.retailer_user.retailer.name }}
           </div>
             <div>
               {{title}}
@@ -489,7 +491,7 @@ table{
       
 
           <div class="menu-list">
-
+            {% if user.groups.all.0.name != 'account' %}
               <ul id="menu-content" class="menu-content collapse out" style="font-size: 14px;">
                   <li>
                     <a href="/">
@@ -596,7 +598,7 @@ table{
                   
                   
               </ul>
-
+              {%endif%}
        </div>
        <div class="mt-auto">
         Version: 1.2.0 <strong onclick="$('.adachiinfo').toggleClass('d-none')">

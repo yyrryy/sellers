@@ -4,9 +4,9 @@
 {% block content %}
 <script src="/static/js/chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-<!-- <div style="top:0;" class="passwordscreen d-none m-auto position-fixed bg-dark w-100 h-100 d-flex justify-content-center text-white align-items-center">
+<div style="top:0;" class="passwordscreen m-auto position-fixed bg-dark w-100 h-100 d-flex justify-content-center text-white align-items-center">
     <input type="password" class="form-control w-50" placeholder="Mot de passe" id="password" onkeyup="checkpassword(event)">
-  </div> -->
+  </div>
   <div class="row">
     <div class="col-3">
     <h4 class="text-center text-white bg-dark rounded p-2 ">
@@ -562,16 +562,16 @@
       getpdctouts(ref)
     })
     
-    inactive=localStorage.getItem('inactive')||'1'
-  console.log('>>>>> ', inactive)
-  if (inactive=='1'){
-    console.log('its inactive')
-    $('.passwordscreen').removeClass('d-none')
-    $('.passwordinput').focus()
-  }else{
-    console.log('its not inactive')
-    checkForInactivity(120)
-  }
+  //   inactive=localStorage.getItem('inactive')||'1'
+  // console.log('>>>>> ', inactive)
+  // if (inactive=='1'){
+  //   console.log('its inactive')
+  //   $('.passwordscreen').removeClass('d-none')
+  //   $('.passwordinput').focus()
+  // }else{
+  //   console.log('its not inactive')
+  //   checkForInactivity(120)
+  // }
   function getprofit(){
             $('.loadingnumbers').removeClass('d-none').addClass('d-flex');
             datefrom=$('.datefrom').val()
