@@ -159,6 +159,7 @@
                 <td>{{i.echeance|date:"d/m/Y"}}</td>
                 <td>{{i.mode}}</td>
                 <td>{{i.amount|floatformat:2}} DH</td>
+                <td><button class="btn btn-danger" onclick="deletereglclient('{{i.id}}')">Supprimer</button></td>
             </tr>
             {% endfor %}
         </table>
@@ -325,6 +326,34 @@
 </div> -->
 
 <script>
+    function deletereglclient(id) {
+    alertify.confirm(
+        "Confirm Deletion", 
+        "Supprimer le reglement?",
+        function () {
+            // User clicked OK
+            // Example: send AJAX request to delete
+            $.ajax({
+                url: "/product/deletereglclient",
+                type: "GET",
+                data: { id: id },
+                success: function (response) {
+                    alertify.success("OK.");
+                    // Optionally reload page or update table
+                    location.reload();
+                },
+                error: function () {
+                    alertify.error("Error.");
+                }
+            });
+        },
+        function () {
+            // User clicked Cancel
+            alertify.error("Deletion cancelled.");
+        }
+    );
+}
+
   function setsupplier(event){
     supplierid=$(event.target).val()
     $.get('/product/setsupplier', {
