@@ -117,7 +117,8 @@ class PaymentClient(models.Model):
         return cls.objects.filter(client=customer, isfacture=False).aggregate(
             total_bon_sum=Sum('amount')
         )['total_bon_sum'] or 0  # Return 0 if no bons exist
-
+    def __str__(self):
+        return self.amount
 # this acts as a bon achat
 class Itemsbysupplier(models.Model):
     supplier= models.ForeignKey(Supplier, related_name='supplier',on_delete=models.CASCADE, default=None)
