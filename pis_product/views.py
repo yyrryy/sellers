@@ -1911,7 +1911,7 @@ def reportnetprofit(request):
         ).aggregate(
         total=Sum('total')
     )['total'] or 0, 2)
-    ventes=PurchasedProduct.objects.filter(product__pr_achat__gt=0, isavoirsupp=False, invoice__datebon__date__range=[datefrom, dateto])
+    ventes=PurchasedProduct.objects.exclude(product__ref__icontagins='sold').filter(product__pr_achat__gt=0, isavoirsupp=False, invoice__datebon__date__range=[datefrom, dateto])
     trs=''
     totalmarge=0
     for  i in ventes:
