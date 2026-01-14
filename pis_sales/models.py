@@ -16,6 +16,7 @@ class SalesHistory(DatedModel):
     retailer = models.ForeignKey(
         'pis_retailer.Retailer', related_name='retailer_sales',on_delete=models.CASCADE
     )
+    bonnote=models.TextField(default=None, null=True)
     receipt_no = models.CharField(
         max_length=20, unique=True, blank=True, null=True
     )

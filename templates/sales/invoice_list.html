@@ -39,7 +39,7 @@
 
                                 </a> -->
                             </td>
-                            <td>{% if invoice.customer %}{{ invoice.customer.customer_name|title}}{% else %}Comptoir{% endif %}</td>
+                            <td>{% if invoice.customer %}{{ invoice.customer.customer_name|title}}{% else %}Comptoir{% endif %} {% if invoice.bonnote %}({{ invoice.bonnote}}){% endif %}</td>
                             <!-- <td>{{ invoice.total_quantity }}</td> -->
                             <td>{{ invoice.grand_total|floatformat:2 }}</td>
                             <td>{{ invoice.paid_amount|floatformat:2 }}</td>

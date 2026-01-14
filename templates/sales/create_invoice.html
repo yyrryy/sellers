@@ -87,6 +87,7 @@
                     <input type="date" name="datebon" placeholder="Date" value="{{present_date|date:'Y-m-d'}}" class="form-control datebon">
                     <input type="time" name="timebon" placeholder="Date" value="{{present_date|date:'Y-m-d'}}" class="form-control timebon">
                 </div>
+                Note:
                 <textarea name="note" class="bonnote"></textarea>
             </div>
 
@@ -711,6 +712,7 @@
                 var datebon=$('[name="datebon"]').val()
                 var timebon=$('[name="timebon"]').val()
                 var customer_value = $('.customer').val();
+                var bonnote = $('.bonnote').val();
                 var customer_id = $('select[name="customer"]').val();
 
                 const itemIds = items.map(item => item.item_id);
@@ -723,6 +725,7 @@
                 console.log("sending");
                 $.post("{% url 'sales:generate_invoice_api' %}", {
                         datebon:datebon,
+                        bonnote:bonnote,
                         timebon:timebon,
                         customer_id: customer_id,
                         sub_total: sub_total,

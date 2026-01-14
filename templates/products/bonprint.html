@@ -57,8 +57,7 @@
             <div>
               cleint: <strong>{{facture.customer.customer_name.upper}} </strong>
             </div>
-
-
+            {% if facture.bonnote %}<strong>{{ facture.bonnote}}</strong>{% endif %}
           </div>
         </div>
     </div>

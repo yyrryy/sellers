@@ -416,10 +416,10 @@ class GenerateInvoiceAPIView(View):
     def post(self, request, *args, **kwargs):
         customer=Customer.objects.get(id=request.POST.get('customer_id'))
         datebon=self.request.POST.get('datebon')
+        bonnote=self.request.POST.get('bonnote')
         timebon=self.request.POST.get('timebon')
         datetime_str = f"{datebon} {timebon}"
         datebon = datetime.strptime(datetime_str, '%Y-%m-%d %H:%M')
-        print('>> datebon', datebon)
         # make it datetime object
         # datebon=datetime.strptime(datebon, '%Y-%m-%d')
         sub_total = self.request.POST.get('sub_total')
@@ -447,6 +447,7 @@ class GenerateInvoiceAPIView(View):
             billing_form_kwargs = {
                 'created_at':datebon,
                 'datebon':datebon,
+                'bonnote':bonnote,
                 'discount': discount,
                 'grand_total': grand_total,
                 'total_quantity': totalQty,
