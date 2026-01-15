@@ -4543,6 +4543,9 @@ def contablefacture(request):
 def deletereglclient(request):
     id=request.GET.get('id')
     reg=PaymentClient.objects.get(pk=id)
+    bon=reg.bon
+    bon.paid_amount=float(bon.paid_amount)-float(reg.amount)
+    bon.save()
     reg.delete()
     return JsonResponse({
         'success':True
