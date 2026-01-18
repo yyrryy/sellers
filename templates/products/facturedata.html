@@ -200,15 +200,7 @@
     <button onclick="addpaymentfacture(event, '{{facture.id}}')" class="btn btn-primary w-
     100 mt-3">Ajouter</button>
 </div>
-<script>
-    function updatefacturedata(event, id){
-        const date = $('.updatefcturedate').val();
-        const number = $('.updatefcturenumber').val();
-        $.get('/product/updatefacturedata', {'id':id, 'date':date, 'number':number}, ()=>{
-            location.href='/product/listfactures/'
-        })
-    }
-</script>
+
 {% endif %}
 {% endif %}
 <!-- {% if not avoir %}

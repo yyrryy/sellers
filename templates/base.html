@@ -890,6 +890,13 @@ table{
 
 
 <script>
+  function updatefacturedata(event, id){
+      const date = $('.updatefcturedate').val();
+      const number = $('.updatefcturenumber').val();
+      $.get('/product/updatefacturedata', {'id':id, 'date':date, 'number':number}, ()=>{
+          location.href='/product/listfactures/'
+      })
+  }
   function addpaymentbon(event, bonid){
     amount=$('.paidamount').val()
     mode=$('.mode').val()
