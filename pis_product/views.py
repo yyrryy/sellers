@@ -4336,7 +4336,7 @@ def avoirview(request):
     return render(request, 'products/factureview.html', ctx)
 
 def listfactures(request):
-    factures=Facture.objects.all()
+    factures=Facture.objects.order_by('facture_no')
     print('>> listfactures')
     total=factures.aggregate(Sum('total')).get('total__sum') or 0
     totaltva=sum([i.thistva() for i in factures])
