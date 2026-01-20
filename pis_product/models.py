@@ -457,6 +457,8 @@ class Facture(models.Model):
         return round((self.total/1.2)*.2, 2)
     def reglements(self):
         return PaymentClient.objects.filter(factures__in=[self])
+    def __str__(self) -> str:
+        return self.facture_no
     
 class Outfacture(models.Model):
     facture=models.ForeignKey(Facture, on_delete=models.CASCADE, default=None)
