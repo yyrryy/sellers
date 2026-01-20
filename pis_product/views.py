@@ -4550,3 +4550,16 @@ def deletereglclient(request):
     return JsonResponse({
         'success':True
     })
+
+def updatefacturedata(request):
+    id=request.GET.get('id')
+    date=request.GET.get('date')
+    date=datetime.strptime(f'{date}', '%Y-%m-%d')
+    number=request.GET.get('number')
+    facture=Facture.objects.get(pk=id)
+    facture.date=date
+    facture.facture_no=number
+    facture.save()
+    return JsonResponse({
+        'success':True
+    })

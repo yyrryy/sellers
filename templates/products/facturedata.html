@@ -33,6 +33,16 @@
     </button> -->
     {% endif %}
   </div>
+<div>
+    <input
+        type="date"
+        name="updatefcturedate"
+        class="updatefcturedate"
+        value="{{ facture.date|date:'Y-m-d' }}"
+    >
+    <input type="text" name="updatefcturenumber" class="updatefcturenumber" id="" value="{{ facture.facture_no}}">
+    <button class="btn border" onclick="updatefacturedata(event, '{{ facture.id }}')">Valider</button>
+</div>
 <div class="bg-white rounded shadow" id="print-invoice" style="padding: 10px">
     <div class="row">
         <div class="d-flex justify-content-between head align-itmes-center">
@@ -46,7 +56,7 @@
                         {{facture.facture_no}}
                 </strong>
             </div>
-            <h6 style="font-size:14px">{{ facture.datefacture|date:"d/m/Y"}}</h6>
+            <h6 style="font-size:14px">{{ facture.date|date:"d/m/Y"}}</h6>
 
         </div>
         <div class="col-xs-12 col-md-12">
@@ -190,6 +200,15 @@
     <button onclick="addpaymentfacture(event, '{{facture.id}}')" class="btn btn-primary w-
     100 mt-3">Ajouter</button>
 </div>
+<script>
+    function updatefacturedata(event, id){
+        const date = $('.updatefcturedate').val();
+        const number = $('.updatefcturenumber').val();
+        $.get('/product/updatefacturedata', {'id':id, 'date':date, 'number':number}, ()=>{
+            location.href='/product/listfactures/'
+        })
+    }
+</script>
 {% endif %}
 {% endif %}
 <!-- {% if not avoir %}
