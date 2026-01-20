@@ -458,7 +458,7 @@ class Facture(models.Model):
     def reglements(self):
         return PaymentClient.objects.filter(factures__in=[self])
     def __str__(self) -> str:
-        return self.facture_no
+        return f'{self.facture_no} {self.date}'
     
 class Outfacture(models.Model):
     facture=models.ForeignKey(Facture, on_delete=models.CASCADE, default=None)
