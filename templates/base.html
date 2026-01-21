@@ -897,6 +897,15 @@ table{
           location.href='/product/listfactures/'
       })
   }
+  function deletefacture(event, id){
+    notify.confirm('Supprimer facture', 'Voulez vous vraiment supprimer cette facture ?', function(){
+      $.get('/product/deletefacture', {'id':id}, ()=>{
+          location.href='/product/listfactures/'
+      })
+    }, function(){
+      alertify.error('Annuler')
+    })
+  }
   function addpaymentbon(event, bonid){
     amount=$('.paidamount').val()
     mode=$('.mode').val()
