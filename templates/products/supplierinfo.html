@@ -27,6 +27,7 @@
 
 <div class="row">
     <div class="bg-white rounded shadow p-2 col-md-3">
+
         <div>
             <table class="table table-bordered">
                 <tr>
@@ -59,7 +60,7 @@
                 </tr>
                 <tr>
                   <th>Rest</th>
-                  <th>{{ supplier.rest|floatformat:2 }} DH</th>
+                  <th>{{ supplier.sold|floatformat:2 }} DH</th>
                 </tr>
 		 <tr>
                     <th>Inventaire</th>
@@ -142,116 +143,122 @@
             </div> -->
         </div>
     </div>
-    <div class="row col-md-9">
+    <div class="bg-white col-md-9">
+        <div>
+            <button class="btn switcher btn-dark" onclick="$('.switcher').removeClass('btn-dark'), $(this).addClass('btn-dark'), $('.toshow').hide(), $('.bons').show()">bons</button>
+            <button class="btn switcher" onclick="$('.switcher').removeClass('btn-dark'), $(this).addClass('btn-dark'), $('.toshow').hide(), $('.reglements').show()">Reglements</button>
+            <button class="btn switcher" onclick="$('.switcher').removeClass('btn-dark'), $(this).addClass('btn-dark'), $('.toshow').hide(), $('.avoirs').show()">Avoirs</button>
+        </div>
         <!-- <br>
         <button type="button" class="btn btn-success addoneproduct" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Ajouter+
         </button>
         <br><br><br> -->
         <!-- bons -->
-        <div class="col-md-6">
-            <div class="bg-white shadow rounded p-2">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h4>Bon</h4>
-                    <strong>
-                        {{nbrbons}}
-                    </strong>
-                </div>
-                <table class="table table-bordered p-2">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Numéro</th>
-                            <th>Montant</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for bon in bons %}
-                        <tr onclick="bondata({{bon.id}})" style="cursor: pointer;">
-                            <td>{{bon.bondate|date:'d/m/Y'}}</td>
-                            <td>{{bon.nbon}}</td>
-                            <td>{{bon.total|floatformat:2}}</td>
-                        </tr>
-                        {% endfor %}
-                </table>
-                <!--  -->
+        <div class="bons toshow shadow rounded p-2">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4>Bon</h4>
+                <strong>
+                    {{nbrbons}}
+                </strong>
             </div>
+            <table class="table table-bordered p-2">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Numéro</th>
+                        <th>Montant</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bon in bons %}
+                    <tr onclick="bondata({{bon.id}})" style="cursor: pointer;">
+                        <td>{{bon.bondate|date:'d/m/Y'}}</td>
+                        <td>{{bon.nbon}}</td>
+                        <td>{{bon.total|floatformat:2}}</td>
+                    </tr>
+                    {% endfor %}
+            </table>
+            <!--  -->
+        </div>
+       
+
+        <div class="reglements toshow shadow rounded p-2" style="display: none;">
+            <div class="p-2 d-flex justify-content-between align-items-center">
+                <h4>Les paiments</h4>
+                <strong>
+                    {{nbrpayments}}
+                </strong>
+            </div>
+            <table class="table table-bordered p-2">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Mode</th>
+                        <th>Montant</th>
+            <th>N° piece</th>
+                        <th>Echeance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bon in payments %}
+                    <tr>
+                        <td ondblclick="$('.deletereglsupp{{bon.id}}').toggleClass('d-none')">{{bon.date|date:'d/m/Y'}}</td>
+                        <td>{{bon.mode}}</td>
+                        <td>{{bon.amount|floatformat:2}}</td>
+                        {% if bon.npiece %}
+                        <td>{{bon.npiece}}</td>
+                        {% else %}
+                        <td>--</td>
+                        {% endif %}
+                        <td>
+                            {% if bon.mode == 'espece' %}
+                            --
+                            {% else %}
+                            {{bon.echeance|date:'d/m/Y'}}
+                            {% endif %}
+                            <button class="btn btn-danger d-none deletereglsupp{{bon.id}}" ondblclick="deletereglsupp('{{bon.id}}')"></button>
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+            </table>
+            <!--  -->
         </div>
 
+        <div class="avoirs toshow rounded shadow p-2" style="display: none;">
+            <div class="p-2 d-flex justify-content-between align-items-center">
+                <h4>Les avoirs</h4>
+                <strong>
+                    {{navoirs}}
+                </strong>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    {% for i in avoirs %}
+                    <tr onclick="avoirsupdata({{i.id}})" >
+                        <td>{{i.date|date:'d/m/Y'}}</td>
+                        <td>{{i.total|floatformat:2}}</td>
+                        <!-- <td>
+                            {{i.items}}
+                        </td> -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <!-- payments -->
         <div class="col-md-6">
-            <div class="bg-white shadow rounded p-2">
-                <div class="p-2 d-flex justify-content-between align-items-center">
-                    <h4>Les paiments</h4>
-                    <strong>
-                        {{nbrpayments}}
-                    </strong>
-                </div>
-                <table class="table table-bordered p-2">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Mode</th>
-                            <th>Montant</th>
-				<th>N° piece</th>
-                            <th>Echeance</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for bon in payments %}
-                        <tr>
-                            <td ondblclick="$('.deletereglsupp{{bon.id}}').toggleClass('d-none')">{{bon.date|date:'d/m/Y'}}</td>
-                            <td>{{bon.mode}}</td>
-                            <td>{{bon.amount|floatformat:2}}</td>
-				            {% if bon.npiece %}
-				            <td>{{bon.npiece}}</td>
-				            {% else %}
-                            <td>--</td>
-                            {% endif %}
-                            <td>
-                                {% if bon.mode == 'espece' %}
-                                --
-                                {% else %}
-                                {{bon.echeance|date:'d/m/Y'}}
-                                {% endif %}
-                                <button class="btn btn-danger d-none deletereglsupp{{bon.id}}" ondblclick="deletereglsupp('{{bon.id}}')"></button>
-                            </td>
-
-                        </tr>
-                        {% endfor %}
-                </table>
-                <!--  -->
-            </div>
         </div>
 
         <!-- avoirs -->
         <div class="mt-2">
-            <div class="bg-white rounded shadow p-2">
-                <div class="p-2 d-flex justify-content-between align-items-center">
-                    <h4>Les avoirs</h4>
-                    <strong>
-                        {{navoirs}}
-                    </strong>
-                </div>
-                <table class="table table-bordered">
-                    <thead>
-                        <th>Date</th>
-                        <th>Total</th>
-                        <th></th>
-                    </thead>
-                    <tbody>
-                        {% for i in avoirs %}
-                        <tr onclick="avoirsupdata({{i.id}})" >
-                            <td>{{i.date|date:'d/m/Y'}}</td>
-                            <td>{{i.total|floatformat:2}}</td>
-                            <!-- <td>
-                                {{i.items}}
-                            </td> -->
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+            
         </div>
     </div>
 </div>

@@ -52,6 +52,7 @@ class Supplier(models.Model):
         avoirs=Avoirsupp.objects.filter(supplier=self)
         reglementsbl=PaymentSupplier.objects.filter(supplier=self)
         bons=Itemsbysupplier.objects.filter(supplier=self)
+        #print("===========from sodl", reglementsbl[0].amount, bons[0].total)
         totalbons=bons.aggregate(total=Sum('total'))['total'] or 0
         totalregl=reglementsbl.aggregate(total=Sum('amount'))['total'] or 0
         totalavoirs=avoirs.aggregate(total=Sum('total'))['total'] or 0

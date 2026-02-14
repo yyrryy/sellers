@@ -252,13 +252,13 @@
                 </div>
                 <div class="form-group">
                     <label for="name" class="form-label">Remise</label>
-                    <input type="number" class="addremiseinp form-control" placeholder="Remise">
+                    <input type="number" class="addremiseinp form-control" placeholder="Remise" value="0">
                     <div class="addremise">  </div>
                     <div class="addprnet"></div>
                 </div>
                 <div class="form-group">
                     <label for="name" class="form-label">Remise 2</label>
-                    <input type="number" class="addremiseinp1 form-control" placeholder="Remise 2">
+                    <input type="number" class="addremiseinp1 form-control" placeholder="Remise 2" value="0">
                     <div class="addremise1"></div>
                     <div class="addprnet"></div>
                 </div>
@@ -420,10 +420,10 @@
                 return
             }
             totalrow=(qtyinpadd*net).toFixed(2)
+            console.log('>> total', totalrow)
             grandtotal+=parseFloat(totalrow)
             localStorage.setItem('grandtotal', grandtotal)
             $('#grandTotal').text(grandtotal.toFixed(2))
-        console.log('>> total', totalrow)
           row={
                 'article':ref+ ' - '+car,
                 'stock':stock,

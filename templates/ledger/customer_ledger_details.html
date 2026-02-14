@@ -151,18 +151,7 @@
                 </form>
             </div>
         </div>
-        <table class="table" style="font-size: 13px;">
-
-            {% for i in clientpayments %}
-            <tr id={{i.id}}>
-                <td>{{i.created_at|date:"d/m/Y"}}</td>
-                <td>{{i.echeance|date:"d/m/Y"}}</td>
-                <td>{{i.mode}}</td>
-                <td>{{i.amount|floatformat:2}} DH</td>
-                <td><button class="btn btn-danger" onclick="deletereglclient('{{i.id}}')">Supprimer</button></td>
-            </tr>
-            {% endfor %}
-        </table>
+       
     </div>
     <!-- payments modal -->
     <div class="modal fade" id="paymentsclientmodal" tabindex="-1" aria-labelledby="editclientmodalLabel" aria-hidden="true">
@@ -211,86 +200,101 @@
     </div>
     <!-- bon sortie -->
     <div class="col-md-9 row">
-        <div class="col-md-6">
-            <div class="shadow rounded p-2" style="background: rgba(201, 255, 202, 0.323);">
-                <h4 class="p-2 rounded text-white bg-success shadow">
-                    <strong>
-                        Achat client
-                    </strong>
-                </h4>
-
-                <table class="table table-striped table-advance table-bordered  ledger-table table-responsive">
-                    <div class="">
-                        <input type="text" class="form-control name_search" placeholder="Rechercher " data-catgoryid="1">
-                    </div>
-                    <thead>
-                    <tr>
-                        <th class="text-center">Date</th>
-                        <th class="text-center">Bon N°</th>
-                        <th class="text-center">Total</th>
-                    </tr>
-                    </thead>
-                    <tbody class="item-table-body text-center products">
-                    {% for i in clientproducts %}
-                    <tr onclick="bondata({{i.id}})">
-                        <td>{{i.datebon|date:"d/m/Y H:i"}} {% if i.paid_amount == i.grand_total%}(Reglé){% endif %}</td>
-                        <!-- <td>
-                            {% for i in i.purchased_items.all %}
-                            {{i.product.ref}} <br>
-                            {% endfor %}
-                        </td> -->
-                        <td>
-                            {{i.receipt_no}}
-                        </td>
-                        <td>
-                            <!-- <a href="{% url 'sales:invoice_update' id=i.id %}">{{ i.receipt_no }}</a> -->
-                            <a >{{ i.grand_total }} DH</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-
-            </div>
+        <div>
+            <button class="btn switcher btn-dark" onclick="$('.switcher').removeClass('btn-dark'), $(this).addClass('btn-dark'), $('.toshow').hide(), $('.bons').show()">bons</button>
+            <button class="btn switcher" onclick="$('.switcher').removeClass('btn-dark'), $(this).addClass('btn-dark'), $('.toshow').hide(), $('.reglements').show()">Reglements</button>
+            <button class="btn switcher" onclick="$('.switcher').removeClass('btn-dark'), $(this).addClass('btn-dark'), $('.toshow').hide(), $('.avoirs').show()">Avoirs</button>
         </div>
-        <!-- bon avoir -->
-        <div class="col-md-6">
-            <div class="shadow rounded p-2" style="background: rgba(255, 180, 180, 0.355);">
-                <h4 class="p-2 rounded text-white bg-danger shadow">
-                    <strong>
-                        Retour client/avoir
-                    </strong>
-                </h4>
-                <table class="table table-striped table-advance table-bordered  ledger-table table-responsive">
-                    <div class="">
-                        <input type="text" class="form-control name_search" placeholder="Rechercher " data-catgoryid="1">
-                    </div>
-                    <thead>
-                    <tr>
-                        <th class="text-center">Date</th>
-                        <th class="text-center">Bon N°</th>
-                        <th class="text-center">Total</th>
-                    </tr>
-                    </thead>
-                    <tbody class="item-table-body text-center products">
-                    {% for i in avoirs %}
-                    <tr onclick="avoirdata({{i.id}})">
+        <div class="bons toshow shadow rounded p-2">
+            <h4 class="p-2 rounded text-white bg-success shadow">
+                <strong>
+                    Achat client
+                </strong>
+            </h4>
 
-                        <td>{% if i.dateavoir == None %}{{i.created_at|date:"d/m/Y"}}{% else %}  {{i.dateavoir|date:"d/m/Y"}} {% endif %}
-                        </td>
-                        <td>
-                            {{i.receipt_no}}
-                        </td>
-                        <td>
-                            {{i.grand_total|floatformat:2}} DH
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+            <table class="table table-striped table-advance table-bordered  ledger-table table-responsive">
+                <div class="">
+                    <input type="text" class="form-control name_search" placeholder="Rechercher " data-catgoryid="1">
+                </div>
+                <thead>
+                <tr>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Bon N°</th>
+                    <th class="text-center">Total</th>
+                </tr>
+                </thead>
+                <tbody class="item-table-body text-center products">
+                {% for i in clientproducts %}
+                <tr onclick="bondata({{i.id}})">
+                    <td>{{i.datebon|date:"d/m/Y H:i"}} {% if i.paid_amount == i.grand_total%}(Reglé){% endif %}</td>
+                    <!-- <td>
+                        {% for i in i.purchased_items.all %}
+                        {{i.product.ref}} <br>
+                        {% endfor %}
+                    </td> -->
+                    <td>
+                        {{i.receipt_no}}
+                    </td>
+                    <td>
+                        <!-- <a href="{% url 'sales:invoice_update' id=i.id %}">{{ i.receipt_no }}</a> -->
+                        <a >{{ i.grand_total }} DH</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
-            </div>
         </div>
+        <div class="avoirs toshow shadow rounded p-2" style="display: none;">
+            <h4 class="p-2 rounded text-white bg-danger shadow">
+                <strong>
+                    Retour client/avoir
+                </strong>
+            </h4>
+            <table class="table table-striped table-advance table-bordered  ledger-table table-responsive">
+                <div class="">
+                    <input type="text" class="form-control name_search" placeholder="Rechercher " data-catgoryid="1">
+                </div>
+                <thead>
+                <tr>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Bon N°</th>
+                    <th class="text-center">Total</th>
+                </tr>
+                </thead>
+                <tbody class="item-table-body text-center products">
+                {% for i in avoirs %}
+                <tr onclick="avoirdata({{i.id}})">
+
+                    <td>{% if i.dateavoir == None %}{{i.created_at|date:"d/m/Y"}}{% else %}  {{i.dateavoir|date:"d/m/Y"}} {% endif %}
+                    </td>
+                    <td>
+                        {{i.receipt_no}}
+                    </td>
+                    <td>
+                        {{i.grand_total|floatformat:2}} DH
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+        <div class="reglements toshow shadow rounded p-2" style="display: none;">
+            <table class="table" style="font-size: 13px;">
+    
+                {% for i in clientpayments %}
+                <tr id={{i.id}}>
+                    <td>{{i.created_at|date:"d/m/Y"}}</td>
+                    <td>{{i.echeance|date:"d/m/Y"}}</td>
+                    <td>{{i.mode}}</td>
+                    <td>{{i.amount|floatformat:2}} DH</td>
+                    <td><button class="btn btn-danger" onclick="deletereglclient('{{i.id}}')">Supprimer</button></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        
 
 
     </div>

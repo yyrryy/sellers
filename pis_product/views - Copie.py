@@ -2178,6 +2178,7 @@ def addsupply(request):
             )
             product.stock=float(product.stock)+float(i['qty'])
             product.save()
+            print('...========', product, product.ref)
             originref=product.ref.split(' ')[0]
             simillar = Product.objects.filter(category=product.category.id).filter(Q(ref__startswith=originref+' ') | Q(ref=originref))
             simillar.update(disponibleinother=True)
