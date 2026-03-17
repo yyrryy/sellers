@@ -232,10 +232,13 @@ class CustomerLedgerDetailsView(TemplateView):
         totalbons=bons.aggregate(Sum('grand_total')).get('grand_total__sum') or 0
         totalcredit=(avoirs.aggregate(Sum('grand_total')).get('grand_total__sum') or 0)+(payments.aggregate(Sum('amount')).get('amount__sum') or 0)
         sold=float(totalbons)-float(totalcredit)
-
+        bonsregle = SalesHistory.objects.filter(customer=customer, paid_amount__gte=F('grand_total'))
+        bonsnonregle = SalesHistory.objects.filter(customer=customer, paid_amount__lt=F('grand_total'))
         #sold=round(float(bons)-float(paid_amount)-float(avoirs)-float(payments), 2)   
         context.update({
             'sold':sold,
+            'bonsregle':bonsregle,
+            'bonsnonregle':bonsnonregle,
             'customer': customer,
             'ledgers': ledgers.order_by('-dated'),
             'ledger_total': '%g' % ledger_total,
