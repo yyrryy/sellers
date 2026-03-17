@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.views.generic import FormView, TemplateView
 from django.http import HttpResponseRedirect, JsonResponse
-from django.db.models import Sum
+from django.db.models import Sum, F
 from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404

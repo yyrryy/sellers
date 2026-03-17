@@ -224,7 +224,7 @@
                 </tr>
                 </thead>
                 <tbody class="item-table-body text-center products">
-                {% for i in bonsnonregle %}
+                {% for i in clientproducts %}
                 <tr onclick="bondata({{i.id}})">
                     <td>{{i.datebon|date:"d/m/Y H:i"}} {% if i.paid_amount == i.grand_total%}(Reglé){% endif %} {% if i.bonnote %} {{i.bonnote}} {%endif%}</td>
                     <!-- <td>
