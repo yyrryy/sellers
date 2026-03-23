@@ -232,8 +232,8 @@ class CustomerLedgerDetailsView(TemplateView):
         totalbons=bons.aggregate(Sum('grand_total')).get('grand_total__sum') or 0
         totalcredit=(avoirs.aggregate(Sum('grand_total')).get('grand_total__sum') or 0)+(payments.aggregate(Sum('amount')).get('amount__sum') or 0)
         sold=float(totalbons)-float(totalcredit)
-        bonsregle = SalesHistory.objects.filter(customer=customer, paid_amount__gte=F('grand_total'))
-        bonsnonregle = SalesHistory.objects.filter(customer=customer, paid_amount__lt=F('grand_total'))
+        bonsregle = SalesHistory.objects.filter(customer=customer, paid_amount__gte=F('grand_total')).order_by('-datebon')
+        bonsnonregle = SalesHistory.objects.filter(customer=customer, paid_amount__lt=F('grand_total')).order_by('-datebon')
         #sold=round(float(bons)-float(paid_amount)-float(avoirs)-float(payments), 2)   
         context.update({
             'sold':sold,
@@ -247,7 +247,7 @@ class CustomerLedgerDetailsView(TemplateView):
             'total_avoirs':total_avoirs,
             'remaining_amount': ledger_total,
             'title': 'Detail Client',
-            'clientproducts':SalesHistory.objects.filter(customer=customer, ismanual=False).order_by('-datebon'),
+            'bonregle':bonsregle,
             'avoirs':Avoir.objects.filter(customer=customer),
             # 'avoirs':Avoir.objects.filter(customer=customer).order_by('-dateavoir'),
             'clientpayments':clientpayments.order_by('-created_at'),
