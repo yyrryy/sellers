@@ -44,48 +44,45 @@
   <!-- last iteration -->
   <div class="postion-relative px-5 facture{{facture.id}}holder p-3" style="min-height: 29.7cm;width: 21cm; border:1px solid;">
     <div class="row p-2 text-center">
-      <img class="col-3" src="/media/logo.jpg" style="width: 15%">
-      {{user.retailer_user.retailer.name}}
-      <div class="row justify-content-between">
-        <div class="col-6">
-          <table class="table table-bordered">
-            <tr>
-              <td>N° Facture</td>
-              <td>
-                {{facture.facture_no}}
-              </td>
-            </tr>
-            <tr>
-              <td>Client</td>
-              <td>
-                {{facture.client.customer_name.upper}}
-              </td>
-            </tr>
-            <tr>
-              <td>ICE</td>
-              <td>
-                {{facture.client.ice}}
-              </td>
-            </tr>
-            <tr>
-              <td>Address</td>
-              <td>
-                {{facture.client.address.upper}}
-              </td>
-            </tr>
-           </table>
-        </div>
-        <div class="col-3">
-          <table class="table table-bordered">
+      <div class="col-3">
+        <img  src="/media/logo.jpg" style="width: 15%">
+        {{user.retailer_user.retailer.name}}
+      </div>
+      <div class="col-6">
+        <table class="table table-bordered">
+          <tr>
+            <td>N° Facture</td>
+            <td>
+              {{facture.facture_no}}
+            </td>
+          </tr>
           <tr>
             <td>Date</td>
             <td>
               {{facture.date|date:"d/m/Y"}}
             </td>
           </tr>
-          
+          <tr>
+            <td>Client</td>
+            <td>
+              {{facture.client.customer_name.upper}}
+            </td>
+          </tr>
+          <tr>
+            <td>ICE</td>
+            <td>
+              {{facture.client.ice}}
+            </td>
+          </tr>
+          <tr>
+            <td>Address</td>
+            <td>
+              {{facture.client.address.upper}}
+            </td>
+          </tr>
           </table>
-        </div>
+      </div>
+        
        
       </div>
       <!-- <div class="d-flex justify-content-between col-9">
@@ -278,48 +275,45 @@
   <div class="postion-relative px-5 facture{{facture.id}}holder p-3" style="min-height: 29.7cm;width: 21cm; border:1px solid;">
 
     <div class="row p-2 text-center">
-      <img class="col-3" src="/media/logo.jpg" style="width: 15%">
-      {{user.retailer_user.retailer.name}}
-      <div class="row justify-content-between">
-        <div class="col-6">
-          <table class="table table-bordered">
-            <tr>
-              <td>N° Facture</td>
-              <td>
-                {{facture.facture_no}}
-              </td>
-            </tr>
-            <tr>
-              <td>Client</td>
-              <td>
-                {{facture.client.customer_name.upper}}
-              </td>
-            </tr>
-            <tr>
-              <td>ICE</td>
-              <td>
-                {{facture.client.ice}}
-              </td>
-            </tr>
-            <tr>
-              <td>Address</td>
-              <td>
-                {{facture.client.address.upper}}
-              </td>
-            </tr>
-           </table>
-        </div>
-        <div class="col-3">
-          <table class="table table-bordered">
+      <div class="col-3">
+        <img  src="/media/logo.jpg" style="width: 15%">
+        {{user.retailer_user.retailer.name}}
+      </div>
+      <div class="col-6">
+        <table class="table table-bordered">
+          <tr>
+            <td>N° Facture</td>
+            <td>
+              {{facture.facture_no}}
+            </td>
+          </tr>
           <tr>
             <td>Date</td>
             <td>
               {{facture.date|date:"d/m/Y"}}
             </td>
           </tr>
-          
+          <tr>
+            <td>Client</td>
+            <td>
+              {{facture.client.customer_name.upper}}
+            </td>
+          </tr>
+          <tr>
+            <td>ICE</td>
+            <td>
+              {{facture.client.ice}}
+            </td>
+          </tr>
+          <tr>
+            <td>Address</td>
+            <td>
+              {{facture.client.address.upper}}
+            </td>
+          </tr>
           </table>
-        </div>
+      </div>
+        
        
       </div>
       <!-- <div class="d-flex justify-content-between col-9">
