@@ -9,11 +9,11 @@
         facture
     </a>
     {% else %}
-    <!-- {% if not facture.paid_amount > 0 %}
+    {% if not facture.paid_amount > 0 %}
     <a href="/product/modifierfacture?id={{facture.id}}" type="button" class="btn btn-primary me-5">
         Modifier
     </a>
-    {%endif%} -->
+    {%endif%}
     
     <button type="button" class="btn btn-primary fa fa-download" onclick="printfacture('{{facture.id}}')">
         facture
@@ -42,7 +42,7 @@
     >
     <input type="text" name="updatefcturenumber" class="updatefcturenumber" id="" value="{{ facture.facture_no}}">
     <button class="btn border" onclick="updatefacturedata(event, '{{ facture.id }}')">Valider</button>
-    <button class="btn border btn-danger" onclick="deletefacture(event, '{{ facture.id }}')">Supprimer</button>
+   
 </div>
 <div class="bg-white rounded shadow" id="print-invoice" style="padding: 10px">
     <div class="row">
