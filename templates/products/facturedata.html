@@ -41,6 +41,16 @@
         value="{{ facture.date|date:'Y-m-d' }}"
     >
     <input type="text" name="updatefcturenumber" class="updatefcturenumber" id="" value="{{ facture.facture_no}}">
+    {% if not facture.customer == None %}
+        <select class="form-selsect select2 updatefactureclient " name="customer" id="customer">
+            <option value="{{facture.client.id}}">
+                {{facture.client.customer_name}}"
+            </option>
+            {% for customer in customers %}
+                <option value="{{ customer.id }}">{{ customer.customer_name }} - {{ customer.customer_phone }}</option>
+            {% endfor %}
+        </select>
+    {%endif%}
     <button class="btn border" onclick="updatefacturedata(event, '{{ facture.id }}')">Valider</button>
    
 </div>

@@ -893,7 +893,8 @@ table{
   function updatefacturedata(event, id){
       const date = $('.updatefcturedate').val();
       const number = $('.updatefcturenumber').val();
-      $.get('/product/updatefacturedata', {'id':id, 'date':date, 'number':number}, ()=>{
+      const clientid = $('.updatefactureclient').val();
+      $.get('/product/updatefacturedata', {'id':id, 'date':date, 'number':number, 'clientid': clientid}, ()=>{
           location.href='/product/listfactures/'
       })
   }

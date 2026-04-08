@@ -4558,8 +4558,10 @@ def updatefacturedata(request):
     date=request.GET.get('date')
     date=datetime.strptime(f'{date}', '%Y-%m-%d')
     number=request.GET.get('number')
+    clientid=request.GET.get('clientid')
     facture=Facture.objects.get(pk=id)
     facture.date=date
+    facture.customer_id=clientid
     facture.facture_no=number
     facture.save()
     return JsonResponse({
