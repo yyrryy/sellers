@@ -81,11 +81,11 @@
                             </label>
                             <input type="text" class="form-control customer_ice" name="ice" >
                             <br>
-				            <!-- <label>
-                                <strong>Sold Initial *</strong>
+				            <label>
+                                <strong>plafon</strong>
                             </label>
-                            <input type="number" class="form-control customer_sold" name="sold" >
-                            <br> -->
+                            <input type="number" class="form-control customer_plafon" name="plafon" value="0">
+                            <br>
                             <button type="button" class="btn btn-primary w-100 addclientbtn ">
                                 Valider
                             </button>
@@ -207,7 +207,8 @@
                         'name':$('.customer').val(),
                         'phone':$('.customer_phone').val(),
                         'ice':$('.customer_ice').val(),
-			'sold':$('.customer_sold').val(),
+                        'plafon':$('.customer_plafon').val(),
+			            'sold':$('.customer_sold').val(),
                         'address':$('.customer_address').val(),
                         'csrfmiddlewaretoken': '{{ csrf_token }}'
                     },

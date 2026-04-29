@@ -89,7 +89,7 @@ class Customer(models.Model):
     address = models.TextField(max_length=500, blank=True,null=True)
     shop = models.CharField(max_length=200, blank=True, null=True)
     supplier=models.ForeignKey('pis_product.Supplier', related_name="supplierofclient", on_delete=models.CASCADE, default=None, blank=True, null=True)
-
+    plafon = models.FloatField(default=0.0, null=True, blank=True)
     def __unicode__(self):
         return self.customer_name
     # def sold(self):

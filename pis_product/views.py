@@ -893,7 +893,8 @@ def addclient(request):
     address=request.POST.get('address')
     ice=request.POST.get('ice')
     sold=request.POST.get('sold') or 0
-    client=Customer.objects.create(rest=sold, customer_name=name,customer_phone=phone, address=address, ice=ice, retailer=Retailer.objects.get(id=request.user.retailer_user.retailer.id))
+    plafon=request.POST.get('plafon') or 0
+    client=Customer.objects.create(rest=sold, customer_name=name,customer_phone=phone, address=address, ice=ice, plafon=plafon, retailer=Retailer.objects.get(id=request.user.retailer_user.retailer.id))
     return JsonResponse({'status':True, 'id':client.id})
 
 def checkclient(request):
