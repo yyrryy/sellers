@@ -70,6 +70,13 @@
                     <th>Rest</th>
                     <th>{{sold}} DH</th>
                 </tr>
+                <tr>
+                    <th>Plafon</th>
+                    <th class="d-flex">
+                        <input type="number" name="Plafon" id="Plafon" class="updateclientplafon" value="{{customer.plafon|floatformat:2}}">
+                        <button class="fa fa-check" onclick="updateclientplafon()"></button>
+                    </th>
+                </tr>
                 
             </table>
             <div class="mt-3" id="reportrange" style="cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
@@ -459,6 +466,11 @@
 <script src="/static/js/moment.js"></script>
 <script src="/static/js/datepicker.js"></script>
 <script>// serch in tables instead of sending ajax request
+    function updateclientplafon(){
+        $.get("/product/updateclientplafon", {"plafon":$(".updateclientplafon").val(), "clientid":"{{customer.id}}"}, ()=>{
+            alertify.success("OK")
+        })
+    }
         $(".name_search").on("keyup", function() {
                 var value = $(this).val().toLowerCase();
                 // $(".product_search_result tr").filter(function() {

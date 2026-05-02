@@ -527,13 +527,15 @@ def getsupplierdata(request):
     })
 @csrf_exempt
 def getclientdata(request):
-    id=request.POST.get('id')
-    supplier=Customer.objects.get(pk=id)
+    id=request.GET.get('id')
+    client=Customer.objects.get(pk=id)
     return JsonResponse({
-        'name':supplier.customer_name,
-        'phone1':supplier.customer_phone,
-        'address':supplier.address,
-        'ice':supplier.ice,
+        'name':client.customer_name,
+        'phone1':client.customer_phone,
+        'address':client.address,
+        'ice':client.ice,
+        'sold':client.sold(),
+        'plafon':client.plafon
     })
 
 
@@ -4567,4 +4569,14 @@ def updatefacturedata(request):
     facture.save()
     return JsonResponse({
         'success':True
+    })
+
+def updateclientplafon(request):
+    clientid=request.GET.get("clientid")
+    plafon=request.GET.get("plafon")
+    client=Customer.objects.get(pk=clientid)
+    client.plafon=plafon
+    client.save()
+    return JsonResponse({
+        "success":True
     })

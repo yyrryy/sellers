@@ -160,7 +160,7 @@
 	$('.editsuppbtn').each((i, el)=>{
             $(el).on('click', ()=>{
                 id=$(el).attr('id')
-                $.post("{% url 'product:getclientdata' %}", {id:id}, function (data) {
+                $.get("{% url 'product:getclientdata' %}", {id:id}, function (data) {
                     console.log(data.data)
                     $('[name="pname"]').val(data.name)
                     $('[name="pphone1"]').val(data.phone1)

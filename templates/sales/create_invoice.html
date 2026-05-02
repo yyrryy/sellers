@@ -405,6 +405,12 @@
             }
         }
         $('[name="customer"]').on('change', function(){
+            $.get("/product/getclientdata", {"id":$('[name="customer"]').val()}, (data)=>{
+                if (data.sold>=data.plafon){
+                    $(".table-responsive").html("<h1 class='text-danger'>client depasser le plafon</h1>")
+                }
+            })
+            
             console.log($(this).val())
             if ($(this).val()=='0'){
                 $('.productslistholder').addClass('d-none')
