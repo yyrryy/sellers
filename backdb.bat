@@ -31,4 +31,5 @@ scp "%BACKUP_FILE%" oussama@167.71.77.64:/home/oussama/oussamabacakups
 
 echo Remote copy completed.
 
+pause
 endlocal
