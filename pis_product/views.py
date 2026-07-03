@@ -895,7 +895,7 @@ def addclient(request):
     address=request.POST.get('address')
     ice=request.POST.get('ice')
     sold=request.POST.get('sold') or 0
-    plafon=request.POST.get('plafon') or 0
+    plafon=request.POST.get('plafon') or 1000
     client=Customer.objects.create(rest=sold, customer_name=name,customer_phone=phone, address=address, ice=ice, plafon=plafon, retailer=Retailer.objects.get(id=request.user.retailer_user.retailer.id))
     return JsonResponse({'status':True, 'id':client.id})
 

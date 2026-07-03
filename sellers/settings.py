@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'sellers.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-in1337 = os.getenv('HOME')=='/home/aaliali'
+in1337 = os.getenv('HOME')=='/home/aaliali' or os.getenv('DEBUG')=='True'
 if in1337:
     DATABASES = {
         'default': {
