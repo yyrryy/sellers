@@ -895,8 +895,7 @@ def addclient(request):
     address=request.POST.get('address')
     ice=request.POST.get('ice')
     sold=request.POST.get('sold') or 0
-    plafon=request.POST.get('plafon') or 1000
-    client=Customer.objects.create(rest=sold, customer_name=name,customer_phone=phone, address=address, ice=ice, plafon=plafon, retailer=Retailer.objects.get(id=request.user.retailer_user.retailer.id))
+    client=Customer.objects.create(rest=sold, customer_name=name,customer_phone=phone, address=address, ice=ice, plafon=1000, retailer=Retailer.objects.get(id=request.user.retailer_user.retailer.id))
     return JsonResponse({'status':True, 'id':client.id})
 
 def checkclient(request):
@@ -1701,6 +1700,7 @@ def updateproduct(request, id):
     etagere = request.POST.get('updateetagere')
     minstock = request.POST.get('updateminstock')
     price = request.POST.get('updatepricemag')
+    prixparticulier = request.POST.get('updateprixparticulier')
     pricevente = request.POST.get('updatepricegro')
     #prachat = request.POST.get('updatepr_achat')
     #remise=request.POST.get('updateremise')
@@ -1729,6 +1729,7 @@ def updateproduct(request, id):
         product.minstock=minstock
         product.mark=mark
         product.category=category
+        product.prixparticulier=prixparticulier
         #product.remise=remise
         #product.prnet=prnet
         #product.originsupp=originsupp
@@ -3743,7 +3744,8 @@ def bonprint(request, id):
         'tva':tva,
         'ttc':order.grand_total,
         'ht':round(float(order.grand_total)-tva, 2),
-        'sold':sold
+        'sold':sold,
+        'lenproducts':len(orderitems),
     }
     return render(request, 'products/bonprint.html', ctx)
 

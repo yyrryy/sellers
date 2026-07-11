@@ -194,6 +194,7 @@ class Product(models.Model):
     originsupp=models.ForeignKey(Supplier, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name="original_supplier")
     mark=models.ForeignKey(Mark, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name="product_mark")
     stock=models.FloatField(default=0.00)
+    prixparticulier=models.FloatField(default=0.00)
     minstock=models.FloatField(default=0.00)
     car = models.CharField(max_length=5000, blank=True, null=True, default=None)
     bar_code = models.CharField(max_length=500, unique=True, blank=True, null=True)
