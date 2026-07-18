@@ -18,7 +18,7 @@ from pis_retailer.models import RetailerUser
 from pis_retailer.forms import RetailerForm, RetailerUserForm
 # import render
 from django.shortcuts import render, redirect
-from pis_product.models import Product, Category
+from pis_product.models import Product, Category, PaymentClient
 from pis_sales.models import SalesHistory
 import shutil
 from django.http import JsonResponse
@@ -164,10 +164,17 @@ class HomePageView(ListView):
                 created_at__icontains=timezone.now().date()
             )
         )
-        today_sales_sum = today_sales.aggregate(
-            total_sales=Sum('grand_total')
-        )
-
+        today_sales_sum = PaymentClient.objects.filter(
+            date=timezone.now().date()
+        ).aggregate(
+            total_sales=Sum('amount')
+        )['total_sales'] or 0
+        today_sales_sum_espece = PaymentClient.objects.filter(
+            date=timezone.now().date(),
+            mode='espece'
+        ).aggregate(
+            total_sales=Sum('amount')
+        )['total_sales'] or 0
         context.update({
             'totalproducts':Product.objects.all().count(),
             'totalclients':Customer.objects.all().count(),
@@ -179,10 +186,8 @@ class HomePageView(ListView):
                 sales_sum.get('total_sales') else 0
             ),
             'today_sales_count': today_sales.count(),
-            'today_sales_sum': (
-                int(today_sales_sum.get('total_sales')) if
-                today_sales_sum.get('total_sales') else 0
-            ),
+            'today_sales_sum': today_sales_sum,
+            'today_sales_sum_espece': today_sales_sum_espece,
             #'cc':Category.objects.filter(children__isnull=True),
             'title':'Dashboard'
         })
