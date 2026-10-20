@@ -733,7 +733,8 @@ def facturedata(request):
     
     return JsonResponse({
         'data':render(request, 'products/facturedata.html', {'facture':facture,
-        'items':items
+        'items':items,
+        'customers':Customer.objects.all()
         }).content.decode('utf-8')
     })
 
@@ -4566,7 +4567,8 @@ def updatefacturedata(request):
     clientid=request.GET.get('clientid')
     facture=Facture.objects.get(pk=id)
     facture.date=date
-    facture.customer_id=clientid
+    print("Updating facture data for ID:", id, "with date:", date, "number:", number, "client ID:", clientid)
+    facture.client_id=clientid
     facture.facture_no=number
     facture.save()
     return JsonResponse({
