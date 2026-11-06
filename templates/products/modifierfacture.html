@@ -138,8 +138,8 @@
                             <span class="total">{{ item.total }}</span>
                         </td>
                         <input type="hidden" class="productid" value={{item.product.id}}>
-                        <!-- <td><i class="btn btn-danger delete" title="Supprimer">X</i>
-                        </td> -->
+                        <td><i class="btn btn-danger delete" title="Supprimer" onclick="removeline(event, '{{item.product.id}}')">X</i>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
